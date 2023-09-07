@@ -15,7 +15,7 @@ namespace PickerParser
     {
 
         string baseUrl = "https://ru.pickgamer.com/games";
-        HashSet<Game> games = new HashSet<Game>();
+        List<Game> games = new List<Game>();
 
         public Parser()
         {
@@ -27,7 +27,7 @@ namespace PickerParser
 
             await ParseGameNames();
             foreach (var game in games)
-                allGamesField.Text += game.GameUrl + "\n";
+                output.Text += game.GameUrl + "\n";
         }
 
         async Task<string> GetPageContent(string url)
@@ -45,7 +45,11 @@ namespace PickerParser
             MatchCollection matches = Regex.Matches(mainPage, regexGame);
 
             foreach (Match match in matches)
-                games.Add(new Game(match.Groups[1].ToString()));
+            {
+                string gameUrl = match.Groups[1].ToString();
+                if (!games.Any(x => x.GameUrl == gameUrl))
+                    games.Add(new Game(gameUrl));
+            }
 
         }
 
@@ -76,7 +80,9 @@ namespace PickerParser
                 }
             }
 
-            label1.Text = game.minRequirements.CPU + "\n" +
+            label1.Text =
+                game.GameUrl + "\n" +
+                game.minRequirements.CPU + "\n" +
                 game.minRequirements.RAM + "\n" +
                 game.minRequirements.OS + "\n" +
                 game.minRequirements.Videocard + "\n" +
@@ -88,7 +94,7 @@ namespace PickerParser
         }
         async void button2_Click(object sender, EventArgs e)
         {
-            Game game = games.FirstOrDefault();
+            Game game = games.Skip(5).Take(1).FirstOrDefault();
             await ParseRequirements(game);
         }
 

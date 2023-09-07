@@ -10,7 +10,8 @@
         }
         public Game()
         {
-
+            minRequirements = new Requirements();
+            recRequirements = new Requirements();
         }
         public string GameName { get; set; }
         public string GameUrl { get; set; }
