@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34018.315
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PickerParser", "PickerParser\PickerParser.csproj", "{8F698817-372B-4177-A4BD-E0EDBA4B3682}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8F698817-372B-4177-A4BD-E0EDBA4B3682}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F698817-372B-4177-A4BD-E0EDBA4B3682}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F698817-372B-4177-A4BD-E0EDBA4B3682}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F698817-372B-4177-A4BD-E0EDBA4B3682}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A5AEA921-9576-402C-A7BD-56ECFA53EA17}
+	EndGlobalSection
+EndGlobal
