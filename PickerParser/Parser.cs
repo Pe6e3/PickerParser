@@ -19,8 +19,8 @@ namespace PickerParser
         static List<Game> games = new List<Game>();
         static int pageCount;
 
-        static CancellationTokenSource cts = new CancellationTokenSource();
-        CancellationToken ct = cts.Token;
+        CancellationTokenSource cts = new CancellationTokenSource();
+
 
         public Parser()
         {
@@ -125,6 +125,12 @@ namespace PickerParser
         }   // Перенести из JSON файла все игры в games (List<Game>)
         async void getGamesInfoBtn_Click(object sender, EventArgs e)
         {
+            // Отменяем предыдущую задачу, если она выполняется
+            cts.Cancel();
+
+            // Создаем новый CancellationTokenSource
+            cts = new CancellationTokenSource();
+            CancellationToken ct = cts.Token;
 
             await Task.Factory.StartNew(async () =>
             {
