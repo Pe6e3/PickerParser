@@ -9,29 +9,16 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 namespace PickerParser
 {
     public partial class Parser : Form
     {
-
         static string baseUrl = "https://ru.pickgamer.com/games";
         static List<Game> games = new List<Game>();
 
         public Parser()
         {
             InitializeComponent();
-        }
-
-        async void button1_Click(object sender, EventArgs e)
-        {
-
-            await ParseGameNames();
-
-            gamesList.Items.Clear();
-            foreach (Game game in games)
-                gamesList.Items.Add(game.GameUrl);
-
         }
 
         static async Task<string> GetPageContent(string url)
@@ -55,7 +42,6 @@ namespace PickerParser
                     games.Add(new Game(gameUrl));
             }
         }
-
 
         async Task GetGamesInfo()
         {
@@ -116,12 +102,6 @@ namespace PickerParser
             }
 
         }
-
-        async void button2_Click(object sender, EventArgs e)
-        {
-            await GetGamesInfo();
-        }
-
 
 
         public static void SaveJsonOnDesktop(string fileName, string json)
@@ -213,10 +193,24 @@ namespace PickerParser
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        async void getLinksBtn_Click(object sender, EventArgs e)
+        {
+            await ParseGameNames();
+
+            gamesList.Items.Clear();
+            foreach (Game game in games)
+                gamesList.Items.Add(game.GameUrl);
+        }
+
+        private void readJsonBtn_Click(object sender, EventArgs e)
         {
             LoadAllGamesJson();
             RefreshGamesCB();
+        }
+
+        async void getGamesInfoBtn_Click(object sender, EventArgs e)
+        {
+            await GetGamesInfo();
         }
     }
 }

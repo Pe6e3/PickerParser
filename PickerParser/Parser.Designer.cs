@@ -65,7 +65,7 @@
             this.getLinksBtn.TabIndex = 1;
             this.getLinksBtn.Text = "Получить ссылки";
             this.getLinksBtn.UseVisualStyleBackColor = true;
-            this.getLinksBtn.Click += new System.EventHandler(this.button1_Click);
+            this.getLinksBtn.Click += new System.EventHandler(this.getLinksBtn_Click);
             // 
             // getGamesInfoBtn
             // 
@@ -75,7 +75,7 @@
             this.getGamesInfoBtn.TabIndex = 3;
             this.getGamesInfoBtn.Text = "Заполнить инфо об играх";
             this.getGamesInfoBtn.UseVisualStyleBackColor = true;
-            this.getGamesInfoBtn.Click += new System.EventHandler(this.button2_Click);
+            this.getGamesInfoBtn.Click += new System.EventHandler(this.getGamesInfoBtn_Click);
             // 
             // gameInfoLabel
             // 
@@ -304,7 +304,7 @@
             this.readJsonBtn.TabIndex = 10;
             this.readJsonBtn.Text = "Прочитать Json";
             this.readJsonBtn.UseVisualStyleBackColor = true;
-            this.readJsonBtn.Click += new System.EventHandler(this.button3_Click);
+            this.readJsonBtn.Click += new System.EventHandler(this.readJsonBtn_Click);
             // 
             // Parser
             // 
