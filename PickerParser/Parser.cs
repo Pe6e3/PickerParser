@@ -27,8 +27,11 @@ namespace PickerParser
         {
 
             await ParseGameNames();
-            foreach (var game in games)
-                output.Text += game.GameUrl + "\n";
+
+            gamesList.Items.Clear();
+            foreach (Game game in games)
+                gamesList.Items.Add(game.GameUrl);
+
         }
 
         static async Task<string> GetPageContent(string url)
@@ -59,6 +62,17 @@ namespace PickerParser
             int count = 0; ////////////////////////////////////
             foreach (var game in games)
             {
+                foreach (ListViewItem item in gamesList.Items) // Выделяет в списке игру, которая сейчас обрабатывается (для визуализации)
+                {
+                    item.Selected = false;
+                    if (item.Text == game.GameUrl)
+                    {
+                        item.Selected = true;
+                        gamesList.Select();
+                        break; // Чтобы не продолжать поиск после нахождения совпадения
+                    }
+                };
+
                 if (++count == 5) return; ///////////////////////
 
                 string gamePage = await GetPageContent($"{baseUrl}/{game.GameUrl}/requirements");
@@ -99,10 +113,6 @@ namespace PickerParser
                     game.minRequirements.VideoRam;
                 Game gameFromList = games.FirstOrDefault(x => x.GameName == game.GameName);
                 gameFromList = game;  // вместо  Update(gameFromList);
-
-
-
-
             }
 
         }
@@ -122,7 +132,6 @@ namespace PickerParser
         async void button2_Click(object sender, EventArgs e)
         {
             await GetGamesInfo();
-            RefreshGamesCB();
         }
 
 
@@ -181,10 +190,6 @@ namespace PickerParser
             }
         }
 
-        private void loadJson_Click(object sender, EventArgs e)
-        {
-            LoadAndDisplayJson(jsonFileName.Text.ToString());
-        }
 
         void RefreshGamesCB()
         {
@@ -195,6 +200,13 @@ namespace PickerParser
         private void saveJsonBtn_Click(object sender, EventArgs e)
         {
             SaveAllGamesJson();
+            RefreshGamesCB();
+        }
+
+        private void gamesCB_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Game game = (Game)gamesCB.SelectedItem;
+            LoadAndDisplayJson(game.GameUrl);
         }
     }
 }
