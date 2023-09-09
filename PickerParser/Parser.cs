@@ -29,9 +29,9 @@ namespace PickerParser
                 return await wc.DownloadStringTaskAsync(url);
             }
         }
-        static async Task ParseGameSlugs()
+        static async Task ParseGameSlugs(int page)
         {
-            string mainPage = await GetPageContent(baseUrl);
+            string mainPage = await GetPageContent(baseUrl + "?page=" + page.ToString());
             string regexGame = @"<a href=""https://ru.pickgamer.com/games/(.*?)\/requirements""";
             MatchCollection matches = Regex.Matches(mainPage, regexGame);
 
@@ -187,7 +187,7 @@ namespace PickerParser
         }  // Парсит данные по каждой игре
         async void getLinksBtn_Click(object sender, EventArgs e)
         {
-            await ParseGameSlugs();
+            await ParseGameSlugs(2);
 
             gamesList.Items.Clear();
             foreach (Game game in games)
