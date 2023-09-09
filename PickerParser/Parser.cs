@@ -9,12 +9,14 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 namespace PickerParser
 {
     public partial class Parser : Form
     {
         static string baseUrl = "https://ru.pickgamer.com/games";
         static List<Game> games = new List<Game>();
+        static int pageCount;
 
         public Parser()
         {
@@ -182,17 +184,45 @@ namespace PickerParser
 
                 if (gameInfoParseStatusBar.Value < gameInfoParseStatusBar.Maximum)
                     gameInfoParseStatusBar.Value++;
-                else saveJsonBtn.Enabled = true;
+                else
+                {
+                    saveJsonBtn.Enabled = true;
+                    getGamesInfoBtn.Enabled = false;
+                }
             }
         }  // Парсит данные по каждой игре
         async void getLinksBtn_Click(object sender, EventArgs e)
         {
-            await ParseGameSlugs(2);
+            if (int.TryParse(pageFromField.Text, out int pageFrom) && int.TryParse(pageToField.Text, out int pageTo))
+            {
+                if (pageFrom <= pageTo && pageTo <= pageCount)
+                {
+                    games.Clear();
+                    gamesList.Items.Clear();
+                    for (int i = pageFrom; i <= pageTo; i++)
+                        await ParseGameSlugs(i);
 
-            gamesList.Items.Clear();
-            foreach (Game game in games)
-                gamesList.Items.Add(game.GameUrl);
-            getGamesInfoBtn.Enabled = true;
+                    foreach (Game game in games)
+                        gamesList.Items.Add(game.GameUrl);
+                    getGamesInfoBtn.Enabled = true;
+                }
+            }
         }  // Получить Слаги игр
+
+
+        async void getPageCount_Click(object sender, EventArgs e)
+        {
+            await GetPageCountAsync();
+        }
+
+        async Task GetPageCountAsync()
+        {
+            string pagexRegex = "page=(.*?)>(?<page>.*?)</a></li>";
+            string mainPage = await GetPageContent(baseUrl);
+            MatchCollection matches = Regex.Matches(mainPage, pagexRegex);
+            pageToField.Text = matches[matches.Count - 1].Groups["page"].ToString();
+            pageCount = Convert.ToInt32(pageToField.Text);
+            getLinksBtn.Enabled = true;
+        }
     }
 }

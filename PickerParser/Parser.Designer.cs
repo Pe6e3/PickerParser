@@ -64,11 +64,17 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.getPageCount = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.pageFromField = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.pageToField = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // getLinksBtn
             // 
-            this.getLinksBtn.Location = new System.Drawing.Point(23, 21);
+            this.getLinksBtn.Enabled = false;
+            this.getLinksBtn.Location = new System.Drawing.Point(64, 84);
             this.getLinksBtn.Name = "getLinksBtn";
             this.getLinksBtn.Size = new System.Drawing.Size(108, 23);
             this.getLinksBtn.TabIndex = 1;
@@ -79,7 +85,7 @@
             // getGamesInfoBtn
             // 
             this.getGamesInfoBtn.Enabled = false;
-            this.getGamesInfoBtn.Location = new System.Drawing.Point(23, 325);
+            this.getGamesInfoBtn.Location = new System.Drawing.Point(23, 399);
             this.getGamesInfoBtn.Name = "getGamesInfoBtn";
             this.getGamesInfoBtn.Size = new System.Drawing.Size(149, 23);
             this.getGamesInfoBtn.TabIndex = 3;
@@ -172,7 +178,7 @@
             // saveJsonBtn
             // 
             this.saveJsonBtn.Enabled = false;
-            this.saveJsonBtn.Location = new System.Drawing.Point(25, 382);
+            this.saveJsonBtn.Location = new System.Drawing.Point(25, 456);
             this.saveJsonBtn.Name = "saveJsonBtn";
             this.saveJsonBtn.Size = new System.Drawing.Size(106, 47);
             this.saveJsonBtn.TabIndex = 8;
@@ -274,9 +280,9 @@
             // 
             this.gamesList.FullRowSelect = true;
             this.gamesList.HideSelection = false;
-            this.gamesList.Location = new System.Drawing.Point(23, 62);
+            this.gamesList.Location = new System.Drawing.Point(23, 113);
             this.gamesList.Name = "gamesList";
-            this.gamesList.Size = new System.Drawing.Size(193, 257);
+            this.gamesList.Size = new System.Drawing.Size(193, 280);
             this.gamesList.TabIndex = 9;
             this.gamesList.UseCompatibleStateImageBehavior = false;
             this.gamesList.View = System.Windows.Forms.View.List;
@@ -293,7 +299,7 @@
             // 
             // gameInfoParseStatusBar
             // 
-            this.gameInfoParseStatusBar.Location = new System.Drawing.Point(23, 354);
+            this.gameInfoParseStatusBar.Location = new System.Drawing.Point(23, 428);
             this.gameInfoParseStatusBar.Name = "gameInfoParseStatusBar";
             this.gameInfoParseStatusBar.Size = new System.Drawing.Size(193, 23);
             this.gameInfoParseStatusBar.TabIndex = 11;
@@ -394,11 +400,61 @@
             this.label2.Text = "Рекомендуемые требования";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // getPageCount
+            // 
+            this.getPageCount.Location = new System.Drawing.Point(23, 4);
+            this.getPageCount.Name = "getPageCount";
+            this.getPageCount.Size = new System.Drawing.Size(193, 32);
+            this.getPageCount.TabIndex = 12;
+            this.getPageCount.Text = "Получить количество страниц";
+            this.getPageCount.UseVisualStyleBackColor = true;
+            this.getPageCount.Click += new System.EventHandler(this.getPageCount_Click);
+            // 
+            // label3
+            // 
+            this.label3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.label3.Location = new System.Drawing.Point(12, 36);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(78, 45);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Получить Слаги игр со страницы ";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // pageFromField
+            // 
+            this.pageFromField.Location = new System.Drawing.Point(96, 49);
+            this.pageFromField.Name = "pageFromField";
+            this.pageFromField.Size = new System.Drawing.Size(45, 20);
+            this.pageFromField.TabIndex = 13;
+            this.pageFromField.Text = "1";
+            this.pageFromField.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label4
+            // 
+            this.label4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.label4.Location = new System.Drawing.Point(145, 43);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(27, 29);
+            this.label4.TabIndex = 4;
+            this.label4.Text = "по";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // pageToField
+            // 
+            this.pageToField.Location = new System.Drawing.Point(171, 49);
+            this.pageToField.Name = "pageToField";
+            this.pageToField.Size = new System.Drawing.Size(45, 20);
+            this.pageToField.TabIndex = 13;
+            this.pageToField.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // Parser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(839, 441);
+            this.ClientSize = new System.Drawing.Size(839, 605);
+            this.Controls.Add(this.pageToField);
+            this.Controls.Add(this.pageFromField);
+            this.Controls.Add(this.getPageCount);
             this.Controls.Add(this.gameInfoParseStatusBar);
             this.Controls.Add(this.readJsonBtn);
             this.Controls.Add(this.gamesList);
@@ -425,6 +481,8 @@
             this.Controls.Add(this.label15);
             this.Controls.Add(this.optRamLabel);
             this.Controls.Add(this.minRamLabel);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.optCpuLabel);
             this.Controls.Add(this.minCpuLabel);
@@ -479,6 +537,11 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button getPageCount;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox pageFromField;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox pageToField;
     }
 }
 
