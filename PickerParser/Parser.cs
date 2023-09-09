@@ -114,16 +114,24 @@ namespace PickerParser
         {
             if (gamesCB.SelectedItem is Game game)
             {
-                gameNameLabel.Text = game.GameName;
                 UrlLabel.Text = game.GameUrl;
                 minCpuLabel.Text = game.minRequirements.CPU;
                 minRamLabel.Text = game.minRequirements.RAM;
                 minOsLabel.Text = game.minRequirements.OS;
                 minVideoLabel.Text = game.minRequirements.Videocard;
-                nimPixelLabel.Text = game.minRequirements.Pixel;
+                minPixelLabel.Text = game.minRequirements.Pixel;
                 minVertexLabel.Text = game.minRequirements.Vertex;
                 minSpaceLabel.Text = game.minRequirements.DiskSpace;
                 minVideoRamLabel.Text = game.minRequirements.VideoRam;
+
+                optCpuLabel.Text = game.optRequirements.CPU;
+                optRamLabel.Text = game.optRequirements.RAM;
+                optOsLabel.Text = game.optRequirements.OS;
+                optVideoLabel.Text = game.optRequirements.Videocard;
+                optPixelLabel.Text = game.optRequirements.Pixel;
+                optVertexLabel.Text = game.optRequirements.Vertex;
+                optSpaceLabel.Text = game.optRequirements.DiskSpace;
+                optVideoRamLabel.Text = game.optRequirements.VideoRam;
             }
         }  // Заполняем поля с инфой о выделенной игре
 
@@ -134,6 +142,7 @@ namespace PickerParser
             gamesList.Items.Clear();
             foreach (Game game in games)
                 gamesList.Items.Add(game.GameUrl);
+            getGamesInfoBtn.Enabled = true;
         }  // Получить Слаги игр
 
         private void readJsonBtn_Click(object sender, EventArgs e)
@@ -145,11 +154,9 @@ namespace PickerParser
         async void getGamesInfoBtn_Click(object sender, EventArgs e)
         {
 
-            gameInfoParseStatusBar.Maximum = 4;
             gameInfoParseStatusBar.Value = 1;
-            //gameInfoParseStatusBar.Maximum = games.Count;
+            gameInfoParseStatusBar.Maximum = games.Count;
 
-            int count = 0; ////////////////////////////////////
             foreach (var game in games)
             {
                 foreach (ListViewItem item in gamesList.Items) // Выделяет в списке игру, которая сейчас обрабатывается (для визуализации)
@@ -162,8 +169,6 @@ namespace PickerParser
                         break; // Чтобы не продолжать поиск после нахождения совпадения
                     }
                 };
-
-                if (++count == 5) return; ///////////////////////
 
                 string gamePage = await GetPageContent($"{baseUrl}/{game.GameUrl}/requirements");
                 string regexRequirements = @"<li>(.*?)\s*:\s*(.*?)<\/li>";
@@ -211,7 +216,10 @@ namespace PickerParser
 
                 if (gameInfoParseStatusBar.Value < gameInfoParseStatusBar.Maximum)
                     gameInfoParseStatusBar.Value++;
+                else saveJsonBtn.Enabled = true;
             }
         }  // Парсит данные по каждой игре
+
+
     }
 }

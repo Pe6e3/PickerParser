@@ -30,19 +30,17 @@
         {
             this.getLinksBtn = new System.Windows.Forms.Button();
             this.getGamesInfoBtn = new System.Windows.Forms.Button();
-            this.gameNameLabel = new System.Windows.Forms.Label();
             this.UrlLabel = new System.Windows.Forms.Label();
             this.minCpuLabel = new System.Windows.Forms.Label();
             this.minRamLabel = new System.Windows.Forms.Label();
             this.minOsLabel = new System.Windows.Forms.Label();
             this.minVideoLabel = new System.Windows.Forms.Label();
-            this.nimPixelLabel = new System.Windows.Forms.Label();
+            this.minPixelLabel = new System.Windows.Forms.Label();
             this.minVertexLabel = new System.Windows.Forms.Label();
             this.minSpaceLabel = new System.Windows.Forms.Label();
             this.minVideoRamLabel = new System.Windows.Forms.Label();
             this.gamesCB = new System.Windows.Forms.ComboBox();
             this.saveJsonBtn = new System.Windows.Forms.Button();
-            this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
@@ -55,6 +53,17 @@
             this.gamesList = new System.Windows.Forms.ListView();
             this.readJsonBtn = new System.Windows.Forms.Button();
             this.gameInfoParseStatusBar = new System.Windows.Forms.ProgressBar();
+            this.optCpuLabel = new System.Windows.Forms.Label();
+            this.optRamLabel = new System.Windows.Forms.Label();
+            this.optOsLabel = new System.Windows.Forms.Label();
+            this.optVideoLabel = new System.Windows.Forms.Label();
+            this.optPixelLabel = new System.Windows.Forms.Label();
+            this.optVertexLabel = new System.Windows.Forms.Label();
+            this.optSpaceLabel = new System.Windows.Forms.Label();
+            this.optVideoRamLabel = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // getLinksBtn
@@ -69,6 +78,7 @@
             // 
             // getGamesInfoBtn
             // 
+            this.getGamesInfoBtn.Enabled = false;
             this.getGamesInfoBtn.Location = new System.Drawing.Point(23, 325);
             this.getGamesInfoBtn.Name = "getGamesInfoBtn";
             this.getGamesInfoBtn.Size = new System.Drawing.Size(149, 23);
@@ -77,18 +87,10 @@
             this.getGamesInfoBtn.UseVisualStyleBackColor = true;
             this.getGamesInfoBtn.Click += new System.EventHandler(this.getGamesInfoBtn_Click);
             // 
-            // gameNameLabel
-            // 
-            this.gameNameLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.gameNameLabel.Location = new System.Drawing.Point(344, 62);
-            this.gameNameLabel.Name = "gameNameLabel";
-            this.gameNameLabel.Size = new System.Drawing.Size(172, 23);
-            this.gameNameLabel.TabIndex = 4;
-            // 
             // UrlLabel
             // 
             this.UrlLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.UrlLabel.Location = new System.Drawing.Point(344, 88);
+            this.UrlLabel.Location = new System.Drawing.Point(446, 47);
             this.UrlLabel.Name = "UrlLabel";
             this.UrlLabel.Size = new System.Drawing.Size(172, 23);
             this.UrlLabel.TabIndex = 4;
@@ -125,13 +127,13 @@
             this.minVideoLabel.Size = new System.Drawing.Size(172, 23);
             this.minVideoLabel.TabIndex = 4;
             // 
-            // nimPixelLabel
+            // minPixelLabel
             // 
-            this.nimPixelLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.nimPixelLabel.Location = new System.Drawing.Point(344, 218);
-            this.nimPixelLabel.Name = "nimPixelLabel";
-            this.nimPixelLabel.Size = new System.Drawing.Size(172, 23);
-            this.nimPixelLabel.TabIndex = 4;
+            this.minPixelLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.minPixelLabel.Location = new System.Drawing.Point(344, 218);
+            this.minPixelLabel.Name = "minPixelLabel";
+            this.minPixelLabel.Size = new System.Drawing.Size(172, 23);
+            this.minPixelLabel.TabIndex = 4;
             // 
             // minVertexLabel
             // 
@@ -161,7 +163,7 @@
             // 
             this.gamesCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.gamesCB.FormattingEnabled = true;
-            this.gamesCB.Location = new System.Drawing.Point(344, 23);
+            this.gamesCB.Location = new System.Drawing.Point(446, 23);
             this.gamesCB.Name = "gamesCB";
             this.gamesCB.Size = new System.Drawing.Size(172, 21);
             this.gamesCB.TabIndex = 7;
@@ -169,7 +171,8 @@
             // 
             // saveJsonBtn
             // 
-            this.saveJsonBtn.Location = new System.Drawing.Point(274, 330);
+            this.saveJsonBtn.Enabled = false;
+            this.saveJsonBtn.Location = new System.Drawing.Point(25, 382);
             this.saveJsonBtn.Name = "saveJsonBtn";
             this.saveJsonBtn.Size = new System.Drawing.Size(106, 47);
             this.saveJsonBtn.TabIndex = 8;
@@ -177,20 +180,10 @@
             this.saveJsonBtn.UseVisualStyleBackColor = true;
             this.saveJsonBtn.Click += new System.EventHandler(this.saveJsonBtn_Click);
             // 
-            // label12
-            // 
-            this.label12.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label12.Location = new System.Drawing.Point(233, 62);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(94, 23);
-            this.label12.TabIndex = 4;
-            this.label12.Text = "Название игры";
-            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // label13
             // 
             this.label13.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label13.Location = new System.Drawing.Point(233, 88);
+            this.label13.Location = new System.Drawing.Point(346, 47);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(94, 23);
             this.label13.TabIndex = 4;
@@ -290,7 +283,7 @@
             // 
             // readJsonBtn
             // 
-            this.readJsonBtn.Location = new System.Drawing.Point(535, 23);
+            this.readJsonBtn.Location = new System.Drawing.Point(252, 14);
             this.readJsonBtn.Name = "readJsonBtn";
             this.readJsonBtn.Size = new System.Drawing.Size(75, 45);
             this.readJsonBtn.TabIndex = 10;
@@ -305,60 +298,164 @@
             this.gameInfoParseStatusBar.Size = new System.Drawing.Size(193, 23);
             this.gameInfoParseStatusBar.TabIndex = 11;
             // 
+            // optCpuLabel
+            // 
+            this.optCpuLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.optCpuLabel.Location = new System.Drawing.Point(531, 114);
+            this.optCpuLabel.Name = "optCpuLabel";
+            this.optCpuLabel.Size = new System.Drawing.Size(172, 23);
+            this.optCpuLabel.TabIndex = 4;
+            // 
+            // optRamLabel
+            // 
+            this.optRamLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.optRamLabel.Location = new System.Drawing.Point(531, 140);
+            this.optRamLabel.Name = "optRamLabel";
+            this.optRamLabel.Size = new System.Drawing.Size(172, 23);
+            this.optRamLabel.TabIndex = 4;
+            // 
+            // optOsLabel
+            // 
+            this.optOsLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.optOsLabel.Location = new System.Drawing.Point(531, 166);
+            this.optOsLabel.Name = "optOsLabel";
+            this.optOsLabel.Size = new System.Drawing.Size(172, 23);
+            this.optOsLabel.TabIndex = 4;
+            // 
+            // optVideoLabel
+            // 
+            this.optVideoLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.optVideoLabel.Location = new System.Drawing.Point(531, 192);
+            this.optVideoLabel.Name = "optVideoLabel";
+            this.optVideoLabel.Size = new System.Drawing.Size(172, 23);
+            this.optVideoLabel.TabIndex = 4;
+            // 
+            // optPixelLabel
+            // 
+            this.optPixelLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.optPixelLabel.Location = new System.Drawing.Point(531, 218);
+            this.optPixelLabel.Name = "optPixelLabel";
+            this.optPixelLabel.Size = new System.Drawing.Size(172, 23);
+            this.optPixelLabel.TabIndex = 4;
+            // 
+            // optVertexLabel
+            // 
+            this.optVertexLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.optVertexLabel.Location = new System.Drawing.Point(531, 244);
+            this.optVertexLabel.Name = "optVertexLabel";
+            this.optVertexLabel.Size = new System.Drawing.Size(172, 23);
+            this.optVertexLabel.TabIndex = 4;
+            // 
+            // optSpaceLabel
+            // 
+            this.optSpaceLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.optSpaceLabel.Location = new System.Drawing.Point(531, 271);
+            this.optSpaceLabel.Name = "optSpaceLabel";
+            this.optSpaceLabel.Size = new System.Drawing.Size(172, 23);
+            this.optSpaceLabel.TabIndex = 4;
+            // 
+            // optVideoRamLabel
+            // 
+            this.optVideoRamLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.optVideoRamLabel.Location = new System.Drawing.Point(531, 297);
+            this.optVideoRamLabel.Name = "optVideoRamLabel";
+            this.optVideoRamLabel.Size = new System.Drawing.Size(172, 23);
+            this.optVideoRamLabel.TabIndex = 4;
+            // 
+            // label11
+            // 
+            this.label11.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.label11.Location = new System.Drawing.Point(346, 21);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(94, 23);
+            this.label11.TabIndex = 4;
+            this.label11.Text = "Игра:";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.label1.Location = new System.Drawing.Point(363, 89);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(142, 13);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Минимальные требования";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.label2.Location = new System.Drawing.Point(541, 89);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(153, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Рекомендуемые требования";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // Parser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(679, 441);
+            this.ClientSize = new System.Drawing.Size(839, 441);
             this.Controls.Add(this.gameInfoParseStatusBar);
             this.Controls.Add(this.readJsonBtn);
             this.Controls.Add(this.gamesList);
             this.Controls.Add(this.saveJsonBtn);
             this.Controls.Add(this.gamesCB);
             this.Controls.Add(this.label21);
+            this.Controls.Add(this.optVideoRamLabel);
             this.Controls.Add(this.minVideoRamLabel);
             this.Controls.Add(this.label20);
+            this.Controls.Add(this.optSpaceLabel);
             this.Controls.Add(this.minSpaceLabel);
             this.Controls.Add(this.label19);
+            this.Controls.Add(this.optVertexLabel);
             this.Controls.Add(this.minVertexLabel);
             this.Controls.Add(this.label18);
-            this.Controls.Add(this.nimPixelLabel);
+            this.Controls.Add(this.optPixelLabel);
+            this.Controls.Add(this.minPixelLabel);
             this.Controls.Add(this.label17);
+            this.Controls.Add(this.optVideoLabel);
             this.Controls.Add(this.minVideoLabel);
             this.Controls.Add(this.label16);
+            this.Controls.Add(this.optOsLabel);
             this.Controls.Add(this.minOsLabel);
             this.Controls.Add(this.label15);
+            this.Controls.Add(this.optRamLabel);
             this.Controls.Add(this.minRamLabel);
             this.Controls.Add(this.label14);
+            this.Controls.Add(this.optCpuLabel);
             this.Controls.Add(this.minCpuLabel);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.UrlLabel);
-            this.Controls.Add(this.label12);
-            this.Controls.Add(this.gameNameLabel);
+            this.Controls.Add(this.label11);
             this.Controls.Add(this.getGamesInfoBtn);
             this.Controls.Add(this.getLinksBtn);
             this.Name = "Parser";
             this.Text = "Парсинг системных требований для игр с PickerGame";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
         private System.Windows.Forms.Button getLinksBtn;
         private System.Windows.Forms.Button getGamesInfoBtn;
-        private System.Windows.Forms.Label gameNameLabel;
         private System.Windows.Forms.Label UrlLabel;
         private System.Windows.Forms.Label minCpuLabel;
         private System.Windows.Forms.Label minRamLabel;
         private System.Windows.Forms.Label minOsLabel;
         private System.Windows.Forms.Label minVideoLabel;
-        private System.Windows.Forms.Label nimPixelLabel;
+        private System.Windows.Forms.Label minPixelLabel;
         private System.Windows.Forms.Label minVertexLabel;
         private System.Windows.Forms.Label minSpaceLabel;
         private System.Windows.Forms.Label minVideoRamLabel;
         private System.Windows.Forms.ComboBox gamesCB;
         private System.Windows.Forms.Button saveJsonBtn;
-        private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
@@ -371,6 +468,17 @@
         private System.Windows.Forms.ListView gamesList;
         private System.Windows.Forms.Button readJsonBtn;
         private System.Windows.Forms.ProgressBar gameInfoParseStatusBar;
+        private System.Windows.Forms.Label optCpuLabel;
+        private System.Windows.Forms.Label optRamLabel;
+        private System.Windows.Forms.Label optOsLabel;
+        private System.Windows.Forms.Label optVideoLabel;
+        private System.Windows.Forms.Label optPixelLabel;
+        private System.Windows.Forms.Label optVertexLabel;
+        private System.Windows.Forms.Label optSpaceLabel;
+        private System.Windows.Forms.Label optVideoRamLabel;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }
 
