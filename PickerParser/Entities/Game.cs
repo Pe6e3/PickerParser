@@ -6,16 +6,16 @@
         {
             GameUrl = gameName;
             minRequirements = new Requirements();
-            recRequirements = new Requirements();
+            optRequirements = new Requirements();
         }
         public Game()
         {
             minRequirements = new Requirements();
-            recRequirements = new Requirements();
+            optRequirements = new Requirements();
         }
         public string GameName { get; set; }
         public string GameUrl { get; set; }
         public Requirements minRequirements { get; set; }
-        public Requirements recRequirements { get; set; }
+        public Requirements optRequirements { get; set; }
     }
 }

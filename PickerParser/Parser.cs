@@ -171,22 +171,41 @@ namespace PickerParser
                 MatchCollection maches = Regex.Matches(gamePage, regexRequirements);
                 Match matchGameName = Regex.Match(gamePage, regexGameName);
                 game.GameName = matchGameName.Groups[1].Value;
+                bool min = true;
                 foreach (Match match in maches)
                 {
                     string reqName = match.Groups[1].Value;
                     string reqValue = match.Groups[2].Value;
 
-                    switch (reqName)
+                    if (min)  // Проверяем - парсим еще минимальные требования или уже оптимальные? (они идут попорядку)
                     {
-                        case "ПРОЦЕССОР": game.minRequirements.CPU = reqValue; break;
-                        case "ОПЕРАТИВНАЯ ПАМЯТЬ": game.minRequirements.RAM = reqValue; break;
-                        case "ОС": game.minRequirements.OS = reqValue; break;
-                        case "ВИДЕОКАРТА": game.minRequirements.Videocard = reqValue; break;
-                        case "PIXEL ШЕЙДЕРЫ": game.minRequirements.Pixel = reqValue; break;
-                        case "VERTEX ШЕЙДЕРЫ": game.minRequirements.Vertex = reqValue; break;
-                        case "СВОБОДНОЕ МЕСТО НА ДИСКЕ": game.minRequirements.DiskSpace = reqValue; break;
-                        case "ВЫДЕЛЕННАЯ ВИДЕО ПАМЯТЬ": game.minRequirements.VideoRam = reqValue; break;
-                        default: break;
+                        switch (reqName)
+                        {
+                            case "ПРОЦЕССОР": game.minRequirements.CPU = reqValue; break;
+                            case "ОПЕРАТИВНАЯ ПАМЯТЬ": game.minRequirements.RAM = reqValue; break;
+                            case "ОС": game.minRequirements.OS = reqValue; break;
+                            case "ВИДЕОКАРТА": game.minRequirements.Videocard = reqValue; break;
+                            case "PIXEL ШЕЙДЕРЫ": game.minRequirements.Pixel = reqValue; break;
+                            case "VERTEX ШЕЙДЕРЫ": game.minRequirements.Vertex = reqValue; break;
+                            case "СВОБОДНОЕ МЕСТО НА ДИСКЕ": game.minRequirements.DiskSpace = reqValue; break;
+                            case "ВЫДЕЛЕННАЯ ВИДЕО ПАМЯТЬ": game.minRequirements.VideoRam = reqValue; min = false; break; // Ставим метку, что все минимальные требования спарсили
+                            default: break;
+                        }
+                    }
+                    else
+                    {
+                        switch (reqName)
+                        {
+                            case "ПРОЦЕССОР": game.optRequirements.CPU = reqValue; break;
+                            case "ОПЕРАТИВНАЯ ПАМЯТЬ": game.optRequirements.RAM = reqValue; break;
+                            case "ОС": game.optRequirements.OS = reqValue; break;
+                            case "ВИДЕОКАРТА": game.optRequirements.Videocard = reqValue; break;
+                            case "PIXEL ШЕЙДЕРЫ": game.optRequirements.Pixel = reqValue; break;
+                            case "VERTEX ШЕЙДЕРЫ": game.optRequirements.Vertex = reqValue; break;
+                            case "СВОБОДНОЕ МЕСТО НА ДИСКЕ": game.optRequirements.DiskSpace = reqValue; break;
+                            case "ВЫДЕЛЕННАЯ ВИДЕО ПАМЯТЬ": game.optRequirements.VideoRam = reqValue; break;
+                            default: break;
+                        }
                     }
                 }
 
