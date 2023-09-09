@@ -100,7 +100,7 @@ namespace PickerParser
                     }
                 }
 
-                label1.Text =
+                gameInfoLabel.Text =
                     game.GameName + "\n" +
                     game.GameUrl + "\n" +
                     game.minRequirements.CPU + "\n" +
@@ -115,18 +115,6 @@ namespace PickerParser
                 gameFromList = game;  // вместо  Update(gameFromList);
             }
 
-        }
-
-        static async void SaveAllGamesJson()
-        {
-            int count = 0; ////////////////////////////////////
-            foreach (var game in games)
-            {
-                if (++count == 5) return; ///////////////////////
-
-                string json = JsonConvert.SerializeObject(game);
-                SaveJsonOnDesktop(game.GameUrl, json);
-            }
         }
 
         async void button2_Click(object sender, EventArgs e)
@@ -166,10 +154,6 @@ namespace PickerParser
                 {
                     string json = File.ReadAllText(filePath);
                     games = JsonConvert.DeserializeObject<List<Game>>(json);
-
-
-
-
                     MessageBox.Show("Данные о всех играх успешно загружены и могут быть обработаны.");
                 }
                 else
@@ -180,23 +164,6 @@ namespace PickerParser
                 MessageBox.Show($"Ошибка при загрузке и отображении JSON: {ex.Message}");
             }
         }
-
-        void DisplayGame(string gameName)
-        {
-            Game game = games.FirstOrDefault(x => x.GameName == gameName);
-            label2.Text = game.GameName;
-            label3.Text = game.GameUrl;
-            label4.Text = game.minRequirements.CPU;
-            label5.Text = game.minRequirements.RAM;
-            label6.Text = game.minRequirements.OS;
-            label7.Text = game.minRequirements.Videocard;
-            label8.Text = game.minRequirements.Pixel;
-            label9.Text = game.minRequirements.Vertex;
-            label10.Text = game.minRequirements.DiskSpace;
-            label11.Text = game.minRequirements.VideoRam;
-        }
-
-
 
         void RefreshGamesCB()
         {
@@ -212,7 +179,18 @@ namespace PickerParser
         private void gamesCB_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (gamesCB.SelectedItem is Game game)
-                DisplayGame(game.GameName);
+            {
+                gameNameLabel.Text = game.GameName;
+                UrlLabel.Text = game.GameUrl;
+                minCpuLabel.Text = game.minRequirements.CPU;
+                minRamLabel.Text = game.minRequirements.RAM;
+                minOsLabel.Text = game.minRequirements.OS;
+                minVideoLabel.Text = game.minRequirements.Videocard;
+                nimPixelLabel.Text = game.minRequirements.Pixel;
+                minVertexLabel.Text = game.minRequirements.Vertex;
+                minSpaceLabel.Text = game.minRequirements.DiskSpace;
+                minVideoRamLabel.Text = game.minRequirements.VideoRam;
+            }
         }
 
         void SaveAllGamesToJsonFile()
