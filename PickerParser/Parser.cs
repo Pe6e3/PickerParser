@@ -58,9 +58,10 @@ namespace PickerParser
         {
             string gamePage = await GetPageContent($"{baseUrl}/{game.GameUrl}/requirements");
             string regexRequirements = @"<li>(.*?)\s*:\s*(.*?)<\/li>";
+            string regexGameName = "<h2>Вот такие системные требования <em>(.*?)</em>";
             MatchCollection maches = Regex.Matches(gamePage, regexRequirements);
-
-
+            Match matchGameName = Regex.Match(gamePage, regexGameName);
+            game.GameName= matchGameName.Groups[1].Value;
             foreach (Match match in maches)
             {
                 string reqName = match.Groups[1].Value;
@@ -81,6 +82,7 @@ namespace PickerParser
             }
 
             label1.Text =
+                game.GameName + "\n" +
                 game.GameUrl + "\n" +
                 game.minRequirements.CPU + "\n" +
                 game.minRequirements.RAM + "\n" +
