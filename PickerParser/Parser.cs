@@ -29,7 +29,7 @@ namespace PickerParser
                 return await wc.DownloadStringTaskAsync(url);
             }
         }
-        static async Task ParseGameNames()
+        static async Task ParseGameSlugs()
         {
             string mainPage = await GetPageContent(baseUrl);
             string regexGame = @"<a href=""https://ru.pickgamer.com/games/(.*?)\/requirements""";
@@ -43,7 +43,106 @@ namespace PickerParser
             }
         }
 
-        async Task GetGamesInfo()
+        public static void SaveJsonOnDesktop(string fileName, string json)
+        {
+            try
+            {
+                string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                string folderPath = Path.Combine(desktopPath, "1"); // Путь к папке
+                Directory.CreateDirectory(folderPath); // Создаем папку, если она не существует
+                string filePath = Path.Combine(folderPath, fileName + ".json"); // Путь к файлу внутри папки
+
+
+                File.WriteAllText(filePath, json);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при сохранении JSON: {ex.Message}");
+            }
+        }
+
+        public void LoadAllGamesJson()
+        {
+            try
+            {
+                string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                string folderPath = Path.Combine(desktopPath, "1"); // Путь к папке
+                string filePath = Path.Combine(folderPath, "AllGames.json");
+
+                if (File.Exists(filePath))
+                {
+                    string json = File.ReadAllText(filePath);
+                    games = JsonConvert.DeserializeObject<List<Game>>(json);
+                    MessageBox.Show("Данные о всех играх успешно загружены и могут быть обработаны.");
+                }
+                else
+                    MessageBox.Show("Файл AllGames.json не существует.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при загрузке и отображении JSON: {ex.Message}");
+            }
+        }
+
+        void RefreshGamesCB()
+        {
+            gamesCB.DataSource = games;
+            gamesCB.DisplayMember = "GameName";
+        }
+
+        private void saveJsonBtn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                string folderPath = Path.Combine(desktopPath, "1"); // Путь к папке
+                Directory.CreateDirectory(folderPath); // Создаем папку, если она не существует
+                string filePath = Path.Combine(folderPath, "AllGames.json"); // Путь к JSON-файлу
+
+                string json = JsonConvert.SerializeObject(games);
+                File.WriteAllText(filePath, json);
+
+                MessageBox.Show("JSON-файл со всеми играми успешно сохранен.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при сохранении JSON: {ex.Message}");
+            }
+        }   // Сохранить JSON файл
+
+        private void gamesCB_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (gamesCB.SelectedItem is Game game)
+            {
+                gameNameLabel.Text = game.GameName;
+                UrlLabel.Text = game.GameUrl;
+                minCpuLabel.Text = game.minRequirements.CPU;
+                minRamLabel.Text = game.minRequirements.RAM;
+                minOsLabel.Text = game.minRequirements.OS;
+                minVideoLabel.Text = game.minRequirements.Videocard;
+                nimPixelLabel.Text = game.minRequirements.Pixel;
+                minVertexLabel.Text = game.minRequirements.Vertex;
+                minSpaceLabel.Text = game.minRequirements.DiskSpace;
+                minVideoRamLabel.Text = game.minRequirements.VideoRam;
+            }
+        }  // Заполняем поля с инфой о выделенной игре
+
+        async void getLinksBtn_Click(object sender, EventArgs e)
+        {
+            await ParseGameSlugs();
+
+            gamesList.Items.Clear();
+            foreach (Game game in games)
+                gamesList.Items.Add(game.GameUrl);
+        }  // Получить Слаги игр
+
+        private void readJsonBtn_Click(object sender, EventArgs e)
+        {
+            LoadAllGamesJson();
+            RefreshGamesCB();
+        }   // Перенести из JSON файла все игры в games (List<Game>)
+
+        async void getGamesInfoBtn_Click(object sender, EventArgs e)
         {
             int count = 0; ////////////////////////////////////
             foreach (var game in games)
@@ -97,120 +196,7 @@ namespace PickerParser
                     game.minRequirements.Vertex + "\n" +
                     game.minRequirements.DiskSpace + "\n" +
                     game.minRequirements.VideoRam;
-                Game gameFromList = games.FirstOrDefault(x => x.GameName == game.GameName);
-                gameFromList = game;  // вместо  Update(gameFromList);
             }
-
-        }
-
-
-        public static void SaveJsonOnDesktop(string fileName, string json)
-        {
-            try
-            {
-                string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                string folderPath = Path.Combine(desktopPath, "1"); // Путь к папке
-                Directory.CreateDirectory(folderPath); // Создаем папку, если она не существует
-                string filePath = Path.Combine(folderPath, fileName + ".json"); // Путь к файлу внутри папки
-
-
-                File.WriteAllText(filePath, json);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка при сохранении JSON: {ex.Message}");
-            }
-        }
-
-        public void LoadAllGamesJson()
-        {
-            try
-            {
-                string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                string folderPath = Path.Combine(desktopPath, "1"); // Путь к папке
-                string filePath = Path.Combine(folderPath, "AllGames.json");
-
-                if (File.Exists(filePath))
-                {
-                    string json = File.ReadAllText(filePath);
-                    games = JsonConvert.DeserializeObject<List<Game>>(json);
-                    MessageBox.Show("Данные о всех играх успешно загружены и могут быть обработаны.");
-                }
-                else
-                    MessageBox.Show("Файл AllGames.json не существует.");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка при загрузке и отображении JSON: {ex.Message}");
-            }
-        }
-
-        void RefreshGamesCB()
-        {
-            gamesCB.DataSource = games;
-            gamesCB.DisplayMember = "GameName";
-        }
-
-        private void saveJsonBtn_Click(object sender, EventArgs e)
-        {
-            SaveAllGamesToJsonFile();
-        }
-
-        private void gamesCB_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (gamesCB.SelectedItem is Game game)
-            {
-                gameNameLabel.Text = game.GameName;
-                UrlLabel.Text = game.GameUrl;
-                minCpuLabel.Text = game.minRequirements.CPU;
-                minRamLabel.Text = game.minRequirements.RAM;
-                minOsLabel.Text = game.minRequirements.OS;
-                minVideoLabel.Text = game.minRequirements.Videocard;
-                nimPixelLabel.Text = game.minRequirements.Pixel;
-                minVertexLabel.Text = game.minRequirements.Vertex;
-                minSpaceLabel.Text = game.minRequirements.DiskSpace;
-                minVideoRamLabel.Text = game.minRequirements.VideoRam;
-            }
-        }
-
-        void SaveAllGamesToJsonFile()
-        {
-            try
-            {
-                string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                string folderPath = Path.Combine(desktopPath, "1"); // Путь к папке
-                Directory.CreateDirectory(folderPath); // Создаем папку, если она не существует
-                string filePath = Path.Combine(folderPath, "AllGames.json"); // Путь к JSON-файлу
-
-                string json = JsonConvert.SerializeObject(games);
-                File.WriteAllText(filePath, json);
-
-                MessageBox.Show("JSON-файл со всеми играми успешно сохранен.");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка при сохранении JSON: {ex.Message}");
-            }
-        }
-
-        async void getLinksBtn_Click(object sender, EventArgs e)
-        {
-            await ParseGameNames();
-
-            gamesList.Items.Clear();
-            foreach (Game game in games)
-                gamesList.Items.Add(game.GameUrl);
-        }
-
-        private void readJsonBtn_Click(object sender, EventArgs e)
-        {
-            LoadAllGamesJson();
-            RefreshGamesCB();
-        }
-
-        async void getGamesInfoBtn_Click(object sender, EventArgs e)
-        {
-            await GetGamesInfo();
-        }
+        }  // Парсит данные по каждой игре
     }
 }
