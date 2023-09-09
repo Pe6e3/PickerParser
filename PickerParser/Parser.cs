@@ -144,6 +144,11 @@ namespace PickerParser
 
         async void getGamesInfoBtn_Click(object sender, EventArgs e)
         {
+
+            gameInfoParseStatusBar.Maximum = 4;
+            gameInfoParseStatusBar.Value = 1;
+            //gameInfoParseStatusBar.Maximum = games.Count;
+
             int count = 0; ////////////////////////////////////
             foreach (var game in games)
             {
@@ -185,17 +190,8 @@ namespace PickerParser
                     }
                 }
 
-                gameInfoLabel.Text =
-                    game.GameName + "\n" +
-                    game.GameUrl + "\n" +
-                    game.minRequirements.CPU + "\n" +
-                    game.minRequirements.RAM + "\n" +
-                    game.minRequirements.OS + "\n" +
-                    game.minRequirements.Videocard + "\n" +
-                    game.minRequirements.Pixel + "\n" +
-                    game.minRequirements.Vertex + "\n" +
-                    game.minRequirements.DiskSpace + "\n" +
-                    game.minRequirements.VideoRam;
+                if (gameInfoParseStatusBar.Value < gameInfoParseStatusBar.Maximum)
+                    gameInfoParseStatusBar.Value++;
             }
         }  // Парсит данные по каждой игре
     }

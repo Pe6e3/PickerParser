@@ -30,7 +30,6 @@
         {
             this.getLinksBtn = new System.Windows.Forms.Button();
             this.getGamesInfoBtn = new System.Windows.Forms.Button();
-            this.gameInfoLabel = new System.Windows.Forms.Label();
             this.gameNameLabel = new System.Windows.Forms.Label();
             this.UrlLabel = new System.Windows.Forms.Label();
             this.minCpuLabel = new System.Windows.Forms.Label();
@@ -55,6 +54,7 @@
             this.label21 = new System.Windows.Forms.Label();
             this.gamesList = new System.Windows.Forms.ListView();
             this.readJsonBtn = new System.Windows.Forms.Button();
+            this.gameInfoParseStatusBar = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // getLinksBtn
@@ -69,21 +69,13 @@
             // 
             // getGamesInfoBtn
             // 
-            this.getGamesInfoBtn.Location = new System.Drawing.Point(23, 382);
+            this.getGamesInfoBtn.Location = new System.Drawing.Point(23, 325);
             this.getGamesInfoBtn.Name = "getGamesInfoBtn";
             this.getGamesInfoBtn.Size = new System.Drawing.Size(149, 23);
             this.getGamesInfoBtn.TabIndex = 3;
             this.getGamesInfoBtn.Text = "Заполнить инфо об играх";
             this.getGamesInfoBtn.UseVisualStyleBackColor = true;
             this.getGamesInfoBtn.Click += new System.EventHandler(this.getGamesInfoBtn_Click);
-            // 
-            // gameInfoLabel
-            // 
-            this.gameInfoLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.gameInfoLabel.Location = new System.Drawing.Point(23, 424);
-            this.gameInfoLabel.Name = "gameInfoLabel";
-            this.gameInfoLabel.Size = new System.Drawing.Size(452, 228);
-            this.gameInfoLabel.TabIndex = 0;
             // 
             // gameNameLabel
             // 
@@ -177,9 +169,9 @@
             // 
             // saveJsonBtn
             // 
-            this.saveJsonBtn.Location = new System.Drawing.Point(284, 382);
+            this.saveJsonBtn.Location = new System.Drawing.Point(274, 330);
             this.saveJsonBtn.Name = "saveJsonBtn";
-            this.saveJsonBtn.Size = new System.Drawing.Size(191, 23);
+            this.saveJsonBtn.Size = new System.Drawing.Size(106, 47);
             this.saveJsonBtn.TabIndex = 8;
             this.saveJsonBtn.Text = "Сохранить все игры в Json";
             this.saveJsonBtn.UseVisualStyleBackColor = true;
@@ -306,11 +298,19 @@
             this.readJsonBtn.UseVisualStyleBackColor = true;
             this.readJsonBtn.Click += new System.EventHandler(this.readJsonBtn_Click);
             // 
+            // gameInfoParseStatusBar
+            // 
+            this.gameInfoParseStatusBar.Location = new System.Drawing.Point(23, 354);
+            this.gameInfoParseStatusBar.Name = "gameInfoParseStatusBar";
+            this.gameInfoParseStatusBar.Size = new System.Drawing.Size(193, 23);
+            this.gameInfoParseStatusBar.TabIndex = 11;
+            // 
             // Parser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(679, 674);
+            this.ClientSize = new System.Drawing.Size(679, 441);
+            this.Controls.Add(this.gameInfoParseStatusBar);
             this.Controls.Add(this.readJsonBtn);
             this.Controls.Add(this.gamesList);
             this.Controls.Add(this.saveJsonBtn);
@@ -337,7 +337,6 @@
             this.Controls.Add(this.gameNameLabel);
             this.Controls.Add(this.getGamesInfoBtn);
             this.Controls.Add(this.getLinksBtn);
-            this.Controls.Add(this.gameInfoLabel);
             this.Name = "Parser";
             this.Text = "Парсинг системных требований для игр с PickerGame";
             this.ResumeLayout(false);
@@ -347,7 +346,6 @@
         #endregion
         private System.Windows.Forms.Button getLinksBtn;
         private System.Windows.Forms.Button getGamesInfoBtn;
-        private System.Windows.Forms.Label gameInfoLabel;
         private System.Windows.Forms.Label gameNameLabel;
         private System.Windows.Forms.Label UrlLabel;
         private System.Windows.Forms.Label minCpuLabel;
@@ -372,6 +370,7 @@
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.ListView gamesList;
         private System.Windows.Forms.Button readJsonBtn;
+        private System.Windows.Forms.ProgressBar gameInfoParseStatusBar;
     }
 }
 
