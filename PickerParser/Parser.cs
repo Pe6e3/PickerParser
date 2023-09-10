@@ -45,6 +45,11 @@ namespace PickerParser
             }
         }
 
+        private void Parser_Load(object sender, EventArgs e)
+        {
+            readJsonBtn.Click += (s, ev) => LoadJson();
+        }
+
         void RefreshGamesCB()
         {
             gamesCB.DataSource = games;
@@ -76,39 +81,35 @@ namespace PickerParser
         }  // Заполняем поля с инфой о выделенной игре
 
 
-        void saveJsonBtn_Click(object sender, EventArgs e)
+        void SaveJson()
         {
             try
             {
                 string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                string folderPath = Path.Combine(desktopPath, "1"); // Путь к папке
-                Directory.CreateDirectory(folderPath); // Создаем папку, если она не существует
-                string filePath = Path.Combine(folderPath, "AllGames.json"); // Путь к JSON-файлу
-
+                string filePath = Path.Combine(desktopPath, "AllGames.json"); // Путь к JSON-файлу
                 string json = JsonConvert.SerializeObject(games);
                 File.WriteAllText(filePath, json);
 
-                MessageBox.Show("JSON-файл со всеми играми успешно сохранен.");
+                MessageBox.Show($"JSON-файл с информацией об играх ({games.Count()} шт) сохранен на рабочем столе.\nПуть:  {filePath}");
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка при сохранении JSON: {ex.Message}");
             }
         }   // Сохранить JSON файл
-        void readJsonBtn_Click(object sender, EventArgs e)
+        void LoadJson()
         {
             try
             {
                 string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                string folderPath = Path.Combine(desktopPath, "1"); // Путь к папке
-                string filePath = Path.Combine(folderPath, "AllGames.json");
+
+                string filePath = Path.Combine(desktopPath, "AllGames.json");
 
                 if (File.Exists(filePath))
                 {
                     string json = File.ReadAllText(filePath);
                     games = JsonConvert.DeserializeObject<List<Game>>(json);
                     gamesCountLabel.Text = games.Count.ToString() + " шт.";
-                    MessageBox.Show("Данные о всех играх успешно загружены и могут быть обработаны.");
                 }
                 else
                     MessageBox.Show("Файл AllGames.json не существует.");
@@ -190,7 +191,8 @@ namespace PickerParser
                 }
                 else
                 {
-                    saveJsonBtn.Enabled = true;
+                    SaveJson();
+                    LoadJson();
                     getGamesInfoBtn.Enabled = false;
                 }
             }
@@ -233,5 +235,7 @@ namespace PickerParser
         {
 
         }
+
+
     }
 }

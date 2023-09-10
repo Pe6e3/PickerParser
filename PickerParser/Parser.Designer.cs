@@ -40,7 +40,6 @@
             this.minSpaceLabel = new System.Windows.Forms.Label();
             this.minVideoRamLabel = new System.Windows.Forms.Label();
             this.gamesCB = new System.Windows.Forms.ComboBox();
-            this.saveJsonBtn = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
@@ -74,17 +73,14 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
+            this.gamesCountLabel = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.parseStatusLabel = new System.Windows.Forms.Label();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.label5 = new System.Windows.Forms.Label();
-            this.gamesCountLabel = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
-            this.panel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // getLinksBtn
@@ -101,9 +97,9 @@
             // getGamesInfoBtn
             // 
             this.getGamesInfoBtn.Enabled = false;
-            this.getGamesInfoBtn.Location = new System.Drawing.Point(57, 10);
+            this.getGamesInfoBtn.Location = new System.Drawing.Point(28, 11);
             this.getGamesInfoBtn.Name = "getGamesInfoBtn";
-            this.getGamesInfoBtn.Size = new System.Drawing.Size(149, 23);
+            this.getGamesInfoBtn.Size = new System.Drawing.Size(178, 23);
             this.getGamesInfoBtn.TabIndex = 3;
             this.getGamesInfoBtn.Text = "Заполнить инфо об играх";
             this.getGamesInfoBtn.UseVisualStyleBackColor = true;
@@ -190,17 +186,6 @@
             this.gamesCB.Size = new System.Drawing.Size(172, 21);
             this.gamesCB.TabIndex = 7;
             this.gamesCB.SelectedIndexChanged += new System.EventHandler(this.gamesCB_SelectedIndexChanged);
-            // 
-            // saveJsonBtn
-            // 
-            this.saveJsonBtn.Enabled = false;
-            this.saveJsonBtn.Location = new System.Drawing.Point(42, 18);
-            this.saveJsonBtn.Name = "saveJsonBtn";
-            this.saveJsonBtn.Size = new System.Drawing.Size(137, 47);
-            this.saveJsonBtn.TabIndex = 8;
-            this.saveJsonBtn.Text = "Сохранить все игры в Json";
-            this.saveJsonBtn.UseVisualStyleBackColor = true;
-            this.saveJsonBtn.Click += new System.EventHandler(this.saveJsonBtn_Click);
             // 
             // label13
             // 
@@ -311,13 +296,12 @@
             this.readJsonBtn.TabIndex = 10;
             this.readJsonBtn.Text = "Прочитать Json";
             this.readJsonBtn.UseVisualStyleBackColor = true;
-            this.readJsonBtn.Click += new System.EventHandler(this.readJsonBtn_Click);
             // 
             // gameInfoParseStatusBar
             // 
             this.gameInfoParseStatusBar.Location = new System.Drawing.Point(28, 64);
             this.gameInfoParseStatusBar.Name = "gameInfoParseStatusBar";
-            this.gameInfoParseStatusBar.Size = new System.Drawing.Size(206, 23);
+            this.gameInfoParseStatusBar.Size = new System.Drawing.Size(457, 23);
             this.gameInfoParseStatusBar.TabIndex = 11;
             // 
             // optCpuLabel
@@ -550,6 +534,15 @@
             this.label6.Text = "(Берется с рабочего стола)";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // gamesCountLabel
+            // 
+            this.gamesCountLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.gamesCountLabel.Location = new System.Drawing.Point(406, 19);
+            this.gamesCountLabel.Name = "gamesCountLabel";
+            this.gamesCountLabel.Size = new System.Drawing.Size(56, 23);
+            this.gamesCountLabel.TabIndex = 4;
+            this.gamesCountLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // panel4
             // 
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -559,14 +552,14 @@
             this.panel4.Controls.Add(this.parseStatusLabel);
             this.panel4.Location = new System.Drawing.Point(261, 10);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(272, 104);
+            this.panel4.Size = new System.Drawing.Size(510, 104);
             this.panel4.TabIndex = 17;
             // 
             // button1
             // 
             this.button1.BackColor = System.Drawing.Color.LightGray;
             this.button1.ForeColor = System.Drawing.Color.DarkRed;
-            this.button1.Location = new System.Drawing.Point(240, 64);
+            this.button1.Location = new System.Drawing.Point(209, 11);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(25, 23);
             this.button1.TabIndex = 12;
@@ -585,56 +578,24 @@
             this.parseStatusLabel.TabIndex = 4;
             this.parseStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // panel5
-            // 
-            this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel5.Controls.Add(this.saveJsonBtn);
-            this.panel5.Controls.Add(this.label5);
-            this.panel5.Location = new System.Drawing.Point(555, 10);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(216, 104);
-            this.panel5.TabIndex = 18;
-            // 
-            // label5
-            // 
-            this.label5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label5.Location = new System.Drawing.Point(17, 68);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(179, 23);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "(Сохранится на рабочем столе)";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // gamesCountLabel
-            // 
-            this.gamesCountLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.gamesCountLabel.Location = new System.Drawing.Point(406, 19);
-            this.gamesCountLabel.Name = "gamesCountLabel";
-            this.gamesCountLabel.Size = new System.Drawing.Size(56, 23);
-            this.gamesCountLabel.TabIndex = 4;
-            this.gamesCountLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // Parser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(803, 507);
-            this.Controls.Add(this.panel5);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Name = "Parser";
             this.Text = "Парсинг системных требований для игр с PickerGame";
+            this.Load += new System.EventHandler(this.Parser_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.panel4.ResumeLayout(false);
-            this.panel5.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -652,7 +613,6 @@
         private System.Windows.Forms.Label minSpaceLabel;
         private System.Windows.Forms.Label minVideoRamLabel;
         private System.Windows.Forms.ComboBox gamesCB;
-        private System.Windows.Forms.Button saveJsonBtn;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
@@ -686,8 +646,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label parseStatusLabel;
         private System.Windows.Forms.Button button1;
