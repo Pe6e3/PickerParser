@@ -16,8 +16,8 @@ namespace PickerParser
     public partial class Parser : Form
     {
         static string baseUrl = "https://ru.pickgamer.com/games";
-        static List<Game> games = new List<Game>();
         static int pageCount;
+        List<Game> games = new List<Game>();
         private bool isDragging = false;
         private Point clickOffset;
 
@@ -34,17 +34,29 @@ namespace PickerParser
                 return await wc.DownloadStringTaskAsync(url);
             }
         }
-        static async Task ParseGameSlugs(int page)
+        async Task ParseGameSlugs(int page)
         {
             string mainPage = await GetPageContent(baseUrl + "?page=" + page.ToString());
             string regexGame = @"<a href=""https://ru.pickgamer.com/games/(.*?)\/requirements""";
             MatchCollection matches = Regex.Matches(mainPage, regexGame);
+
 
             foreach (Match match in matches)
             {
                 string gameUrl = match.Groups[1].ToString();
                 if (!games.Any(x => x.GameUrl == gameUrl))
                     games.Add(new Game(gameUrl));
+
+
+                if (gameInfoParseStatusBar.Value < gameInfoParseStatusBar.Maximum)
+                {
+                    gameInfoParseStatusBar.Value++;
+                    int value = gameInfoParseStatusBar.Value;
+                    int max = gameInfoParseStatusBar.Maximum;
+                    gameInfoParseStatusBar.Text = $"{(value * 100) / max}% ({value.ToString()}/{max.ToString()}) -  {gameUrl}";
+                }
+
+
             }
         }
 
@@ -129,7 +141,7 @@ namespace PickerParser
         }   // Перенести из JSON файла все игры в games (List<Game>)
         async void GetGames()
         {
-
+            textStatusLabel.Text = "Получение данных об играх";
             gameInfoParseStatusBar.Value = 1;
             gameInfoParseStatusBar.Maximum = games.Count;
 
@@ -185,13 +197,15 @@ namespace PickerParser
                     gameInfoParseStatusBar.Value++;
                     int value = gameInfoParseStatusBar.Value;
                     int max = gameInfoParseStatusBar.Maximum;
-                    gameInfoParseStatusBar.Text = $"{(value * 100) / max}% ({value.ToString()}/{max.ToString()})  -  {game.GameUrl}";
+                    gameInfoParseStatusBar.Text = $"{(value * 100) / max}% ({value.ToString()}/{max.ToString()})  -  {game.GameName}";
 
                 }
                 else
                 {
                     SaveJson();
                     LoadJson();
+                    textStatusLabel.Text = "";
+
                 }
             }
         }  // Парсит данные по каждой игре
@@ -202,6 +216,9 @@ namespace PickerParser
                 if (pageFrom <= pageTo && pageTo <= pageCount)
                 {
                     games.Clear();
+                    gameInfoParseStatusBar.Value = 1;
+                    gameInfoParseStatusBar.Maximum = (pageTo - pageFrom + 1) * 20;
+                    textStatusLabel.Text = "Получение Слагов игр";
                     for (int i = pageFrom; i <= pageTo; i++)
                         await ParseGameSlugs(i);
 

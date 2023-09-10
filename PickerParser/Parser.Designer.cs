@@ -71,8 +71,9 @@
             this.label6 = new System.Windows.Forms.Label();
             this.gamesCountLabel = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.exitBtn = new System.Windows.Forms.Button();
             this.gameInfoParseStatusBar = new PickerParser.Components.ColoredProgressBar();
+            this.exitBtn = new System.Windows.Forms.Button();
+            this.textStatusLabel = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -612,10 +613,25 @@
             // 
             this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.panel4.Controls.Add(this.gameInfoParseStatusBar);
+            this.panel4.Controls.Add(this.textStatusLabel);
             this.panel4.Location = new System.Drawing.Point(20, 150);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(510, 104);
             this.panel4.TabIndex = 17;
+            // 
+            // gameInfoParseStatusBar
+            // 
+            this.gameInfoParseStatusBar.BackColor = System.Drawing.Color.ForestGreen;
+            this.gameInfoParseStatusBar.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.gameInfoParseStatusBar.BarColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(20)))), ((int)(((byte)(100)))), ((int)(((byte)(20)))));
+            this.gameInfoParseStatusBar.ForeColor = System.Drawing.SystemColors.Control;
+            this.gameInfoParseStatusBar.Location = new System.Drawing.Point(28, 42);
+            this.gameInfoParseStatusBar.Name = "gameInfoParseStatusBar";
+            this.gameInfoParseStatusBar.Size = new System.Drawing.Size(457, 41);
+            this.gameInfoParseStatusBar.Step = 1;
+            this.gameInfoParseStatusBar.TabIndex = 12;
+            this.gameInfoParseStatusBar.TextColor = System.Drawing.Color.Silver;
+            this.gameInfoParseStatusBar.TextFont = new System.Drawing.Font("W3$iP", 9F);
             // 
             // exitBtn
             // 
@@ -635,18 +651,17 @@
             this.exitBtn.UseVisualStyleBackColor = false;
             this.exitBtn.Click += new System.EventHandler(this.exitBtn_Click);
             // 
-            // gameInfoParseStatusBar
+            // textStatusLabel
             // 
-            this.gameInfoParseStatusBar.BackColor = System.Drawing.Color.ForestGreen;
-            this.gameInfoParseStatusBar.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.gameInfoParseStatusBar.BarColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(20)))), ((int)(((byte)(100)))), ((int)(((byte)(20)))));
-            this.gameInfoParseStatusBar.ForeColor = System.Drawing.SystemColors.Control;
-            this.gameInfoParseStatusBar.Location = new System.Drawing.Point(28, 29);
-            this.gameInfoParseStatusBar.Name = "gameInfoParseStatusBar";
-            this.gameInfoParseStatusBar.Size = new System.Drawing.Size(457, 41);
-            this.gameInfoParseStatusBar.Step = 1;
-            this.gameInfoParseStatusBar.TabIndex = 12;
-            this.gameInfoParseStatusBar.TextColor = System.Drawing.Color.Silver;
+            this.textStatusLabel.BackColor = System.Drawing.Color.Transparent;
+            this.textStatusLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.textStatusLabel.Font = new System.Drawing.Font("W3$iP", 8.25F);
+            this.textStatusLabel.ForeColor = System.Drawing.Color.DarkGray;
+            this.textStatusLabel.Location = new System.Drawing.Point(32, 19);
+            this.textStatusLabel.Name = "textStatusLabel";
+            this.textStatusLabel.Size = new System.Drawing.Size(453, 20);
+            this.textStatusLabel.TabIndex = 4;
+            this.textStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Parser
             // 
@@ -724,6 +739,7 @@
         private System.Windows.Forms.Label gamesCountLabel;
         private Components.ColoredProgressBar gameInfoParseStatusBar;
         private System.Windows.Forms.Button exitBtn;
+        private System.Windows.Forms.Label textStatusLabel;
     }
 }
 
