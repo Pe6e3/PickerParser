@@ -107,6 +107,7 @@ namespace PickerParser
                 {
                     string json = File.ReadAllText(filePath);
                     games = JsonConvert.DeserializeObject<List<Game>>(json);
+                    gamesCountLabel.Text = games.Count.ToString() + " шт.";
                     MessageBox.Show("Данные о всех играх успешно загружены и могут быть обработаны.");
                 }
                 else
@@ -183,7 +184,10 @@ namespace PickerParser
                 }
 
                 if (gameInfoParseStatusBar.Value < gameInfoParseStatusBar.Maximum)
+                {
                     gameInfoParseStatusBar.Value++;
+                    parseStatusLabel.Text = gameInfoParseStatusBar.Value.ToString() + "/" + gameInfoParseStatusBar.Maximum.ToString() + "   " + game.GameUrl;
+                }
                 else
                 {
                     saveJsonBtn.Enabled = true;

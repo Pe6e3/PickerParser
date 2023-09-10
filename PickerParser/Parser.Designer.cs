@@ -79,6 +79,7 @@
             this.parseStatusLabel = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
+            this.gamesCountLabel = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -530,6 +531,7 @@
             this.panel3.Controls.Add(this.label1);
             this.panel3.Controls.Add(this.label13);
             this.panel3.Controls.Add(this.UrlLabel);
+            this.panel3.Controls.Add(this.gamesCountLabel);
             this.panel3.Controls.Add(this.label11);
             this.panel3.Location = new System.Drawing.Point(261, 132);
             this.panel3.Name = "panel3";
@@ -604,6 +606,15 @@
             this.label5.TabIndex = 4;
             this.label5.Text = "(Сохранится на рабочем столе)";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // gamesCountLabel
+            // 
+            this.gamesCountLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.gamesCountLabel.Location = new System.Drawing.Point(406, 19);
+            this.gamesCountLabel.Name = "gamesCountLabel";
+            this.gamesCountLabel.Size = new System.Drawing.Size(56, 23);
+            this.gamesCountLabel.TabIndex = 4;
+            this.gamesCountLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Parser
             // 
@@ -680,6 +691,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label parseStatusLabel;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label gamesCountLabel;
     }
 }
 
