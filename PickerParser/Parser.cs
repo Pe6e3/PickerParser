@@ -224,5 +224,10 @@ namespace PickerParser
             pageCount = Convert.ToInt32(pageToField.Text);
             getLinksBtn.Enabled = true;
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
