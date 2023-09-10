@@ -21,7 +21,6 @@ namespace PickerParser
         private bool isDragging = false;
         private Point clickOffset;
 
-
         public Parser()
         {
             InitializeComponent();
@@ -87,7 +86,6 @@ namespace PickerParser
                 optVideoRamLabel.Text = game.optRequirements.VideoRam;
             }
         }  // Заполняем поля с инфой о выделенной игре
-
 
         void SaveJson()
         {
@@ -212,7 +210,6 @@ namespace PickerParser
             }
         }  // Получить Слаги игр
 
-
         async void getPageCount_Click(object sender, EventArgs e)
         {
             await GetPageCountAsync();
@@ -226,11 +223,6 @@ namespace PickerParser
             pageToField.Text = matches[matches.Count - 1].Groups["page"].ToString();
             pageCount = Convert.ToInt32(pageToField.Text);
             getLinksBtn.Enabled = true;
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void exitBtn_Click(object sender, EventArgs e)
