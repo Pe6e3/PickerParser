@@ -304,12 +304,13 @@
             // 
             // readJsonBtn
             // 
+            this.readJsonBtn.BackColor = System.Drawing.SystemColors.ControlLight;
             this.readJsonBtn.Location = new System.Drawing.Point(12, 21);
             this.readJsonBtn.Name = "readJsonBtn";
             this.readJsonBtn.Size = new System.Drawing.Size(121, 39);
             this.readJsonBtn.TabIndex = 10;
             this.readJsonBtn.Text = "Прочитать Json";
-            this.readJsonBtn.UseVisualStyleBackColor = true;
+            this.readJsonBtn.UseVisualStyleBackColor = false;
             this.readJsonBtn.Click += new System.EventHandler(this.readJsonBtn_Click);
             // 
             // gameInfoParseStatusBar
