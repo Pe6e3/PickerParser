@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace PickerParser
 {
@@ -139,76 +140,7 @@ namespace PickerParser
 
             RefreshGamesCB();
         }   // Перенести из JSON файла все игры в games (List<Game>)
-        async void GetGames()
-        {
-            textStatusLabel.Text = "Получение данных об играх";
-            gameInfoParseStatusBar.Value = 1;
-            gameInfoParseStatusBar.Maximum = games.Count;
 
-            foreach (var game in games)
-            {
-
-                string gamePage = await GetPageContent($"{baseUrl}/{game.GameUrl}/requirements");
-                string regexRequirements = @"<li>(.*?)\s*:\s*(.*?)<\/li>";
-                string regexGameName = "<h2>Вот такие системные требования <em>(.*?)</em>";
-                MatchCollection maches = Regex.Matches(gamePage, regexRequirements);
-                Match matchGameName = Regex.Match(gamePage, regexGameName);
-                game.GameName = matchGameName.Groups[1].Value;
-                bool min = true;
-                foreach (Match match in maches)
-                {
-                    string reqName = match.Groups[1].Value;
-                    string reqValue = match.Groups[2].Value;
-
-                    if (min)  // Проверяем - парсим еще минимальные требования или уже оптимальные? (они идут попорядку)
-                    {
-                        switch (reqName)
-                        {
-                            case "ПРОЦЕССОР": game.minRequirements.CPU = reqValue; break;
-                            case "ОПЕРАТИВНАЯ ПАМЯТЬ": game.minRequirements.RAM = reqValue; break;
-                            case "ОС": game.minRequirements.OS = reqValue; break;
-                            case "ВИДЕОКАРТА": game.minRequirements.Videocard = reqValue; break;
-                            case "PIXEL ШЕЙДЕРЫ": game.minRequirements.Pixel = reqValue; break;
-                            case "VERTEX ШЕЙДЕРЫ": game.minRequirements.Vertex = reqValue; break;
-                            case "СВОБОДНОЕ МЕСТО НА ДИСКЕ": game.minRequirements.DiskSpace = reqValue; break;
-                            case "ВЫДЕЛЕННАЯ ВИДЕО ПАМЯТЬ": game.minRequirements.VideoRam = reqValue; min = false; break; // Ставим метку, что все минимальные требования спарсили
-                            default: break;
-                        }
-                    }
-                    else
-                    {
-                        switch (reqName)
-                        {
-                            case "ПРОЦЕССОР": game.optRequirements.CPU = reqValue; break;
-                            case "ОПЕРАТИВНАЯ ПАМЯТЬ": game.optRequirements.RAM = reqValue; break;
-                            case "ОС": game.optRequirements.OS = reqValue; break;
-                            case "ВИДЕОКАРТА": game.optRequirements.Videocard = reqValue; break;
-                            case "PIXEL ШЕЙДЕРЫ": game.optRequirements.Pixel = reqValue; break;
-                            case "VERTEX ШЕЙДЕРЫ": game.optRequirements.Vertex = reqValue; break;
-                            case "СВОБОДНОЕ МЕСТО НА ДИСКЕ": game.optRequirements.DiskSpace = reqValue; break;
-                            case "ВЫДЕЛЕННАЯ ВИДЕО ПАМЯТЬ": game.optRequirements.VideoRam = reqValue; break;
-                            default: break;
-                        }
-                    }
-                }
-
-                if (gameInfoParseStatusBar.Value < gameInfoParseStatusBar.Maximum)
-                {
-                    gameInfoParseStatusBar.Value++;
-                    int value = gameInfoParseStatusBar.Value;
-                    int max = gameInfoParseStatusBar.Maximum;
-                    gameInfoParseStatusBar.Text = $"{(value * 100) / max}% ({value.ToString()}/{max.ToString()})  -  {game.GameName}";
-
-                }
-                else
-                {
-                    SaveJson();
-                    LoadJson();
-                    textStatusLabel.Text = "";
-
-                }
-            }
-        }  // Парсит данные по каждой игре
         async void getLinksBtn_Click(object sender, EventArgs e)
         {
             if (int.TryParse(pageFromField.Text, out int pageFrom) && int.TryParse(pageToField.Text, out int pageTo))
@@ -272,5 +204,91 @@ namespace PickerParser
                 this.Location = newLocation;
             }
         }
+
+        async Task GetGames()
+        {
+            textStatusLabel.Text = "Получение данных об играх";
+            gameInfoParseStatusBar.Value = 1;
+            gameInfoParseStatusBar.Maximum = games.Count;
+
+
+            List<Task> parsingTasks = new List<Task>();    // список задач для парсинга данных об играх
+
+            foreach (var game in games)            // парсинг каждой игры и добавление задачи в список
+                parsingTasks.Add(ParseGame(game));
+
+            await Task.WhenAll(parsingTasks);   // ждем завершения всех задач парсинга
+
+            SaveJson();
+            LoadJson();
+            textStatusLabel.Text = "";
+        }
+
+        async Task ParseGame(Game game)
+        {
+            try
+            {
+
+                string gamePage = await GetPageContent($"{baseUrl}/{game.GameUrl}/requirements");
+                string regexRequirements = @"<li>(.*?)\s*:\s*(.*?)<\/li>";
+                string regexGameName = "<h2>Вот такие системные требования <em>(.*?)</em>";
+                MatchCollection maches = Regex.Matches(gamePage, regexRequirements);
+                Match matchGameName = Regex.Match(gamePage, regexGameName);
+                game.GameName = matchGameName.Groups[1].Value;
+                bool min = true;
+                foreach (Match match in maches)
+                {
+                    string reqName = match.Groups[1].Value;
+                    string reqValue = match.Groups[2].Value;
+
+                    if (min)  // Проверяем - парсим еще минимальные требования или уже оптимальные? (они идут попорядку)
+                    {
+                        switch (reqName)
+                        {
+                            case "ПРОЦЕССОР": game.minRequirements.CPU = reqValue; break;
+                            case "ОПЕРАТИВНАЯ ПАМЯТЬ": game.minRequirements.RAM = reqValue; break;
+                            case "ОС": game.minRequirements.OS = reqValue; break;
+                            case "ВИДЕОКАРТА": game.minRequirements.Videocard = reqValue; break;
+                            case "PIXEL ШЕЙДЕРЫ": game.minRequirements.Pixel = reqValue; break;
+                            case "VERTEX ШЕЙДЕРЫ": game.minRequirements.Vertex = reqValue; break;
+                            case "СВОБОДНОЕ МЕСТО НА ДИСКЕ": game.minRequirements.DiskSpace = reqValue; break;
+                            case "ВЫДЕЛЕННАЯ ВИДЕО ПАМЯТЬ": game.minRequirements.VideoRam = reqValue; min = false; break; // Ставим метку, что все минимальные требования спарсили
+                            default: break;
+                        }
+                    }
+                    else
+                    {
+                        switch (reqName)
+                        {
+                            case "ПРОЦЕССОР": game.optRequirements.CPU = reqValue; break;
+                            case "ОПЕРАТИВНАЯ ПАМЯТЬ": game.optRequirements.RAM = reqValue; break;
+                            case "ОС": game.optRequirements.OS = reqValue; break;
+                            case "ВИДЕОКАРТА": game.optRequirements.Videocard = reqValue; break;
+                            case "PIXEL ШЕЙДЕРЫ": game.optRequirements.Pixel = reqValue; break;
+                            case "VERTEX ШЕЙДЕРЫ": game.optRequirements.Vertex = reqValue; break;
+                            case "СВОБОДНОЕ МЕСТО НА ДИСКЕ": game.optRequirements.DiskSpace = reqValue; break;
+                            case "ВЫДЕЛЕННАЯ ВИДЕО ПАМЯТЬ": game.optRequirements.VideoRam = reqValue; break;
+                            default: break;
+                        }
+                    }
+                }
+                gameInfoParseStatusBar.Invoke((MethodInvoker)delegate
+                {
+                    if (gameInfoParseStatusBar.Value < gameInfoParseStatusBar.Maximum)
+                    {
+
+                        gameInfoParseStatusBar.Value++;
+                        int value = gameInfoParseStatusBar.Value;
+                        int max = gameInfoParseStatusBar.Maximum;
+                        gameInfoParseStatusBar.Text = $"{(value * 100) / max}% ({value}/{max})  -  {game.GameName}";
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при парсинге игры {game.GameName}: {ex.Message}");
+            }
+        }
+
     }
 }
