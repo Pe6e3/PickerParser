@@ -1,4 +1,4 @@
-﻿namespace PickerParser
+namespace PickerParser
 {
     partial class Parser
     {
@@ -70,15 +70,15 @@
             this.pageToField = new System.Windows.Forms.TextBox();
             this.linksCountLabel = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.label6 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
-            this.parseStatusLabel = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.parseStatusLabel = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -417,13 +417,12 @@
             // 
             // getPageCount
             // 
-            this.getPageCount.BackColor = System.Drawing.SystemColors.ButtonShadow;
             this.getPageCount.Location = new System.Drawing.Point(12, 11);
             this.getPageCount.Name = "getPageCount";
             this.getPageCount.Size = new System.Drawing.Size(193, 32);
             this.getPageCount.TabIndex = 12;
             this.getPageCount.Text = "Получить количество страниц";
-            this.getPageCount.UseVisualStyleBackColor = false;
+            this.getPageCount.UseVisualStyleBackColor = true;
             this.getPageCount.Click += new System.EventHandler(this.getPageCount_Click);
             // 
             // pageFromField
@@ -477,6 +476,15 @@
             this.panel1.Size = new System.Drawing.Size(228, 396);
             this.panel1.TabIndex = 14;
             // 
+            // panel2
+            // 
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel2.Controls.Add(this.getPageCount);
+            this.panel2.Location = new System.Drawing.Point(12, 10);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(228, 66);
+            this.panel2.TabIndex = 15;
+            // 
             // label3
             // 
             this.label3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -486,15 +494,6 @@
             this.label3.TabIndex = 4;
             this.label3.Text = "c";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // panel2
-            // 
-            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel2.Controls.Add(this.getPageCount);
-            this.panel2.Location = new System.Drawing.Point(12, 10);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(228, 66);
-            this.panel2.TabIndex = 15;
             // 
             // panel3
             // 
@@ -536,18 +535,6 @@
             this.panel3.Size = new System.Drawing.Size(510, 346);
             this.panel3.TabIndex = 16;
             // 
-            // label6
-            // 
-            this.label6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label6.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label6.Location = new System.Drawing.Point(11, 57);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(123, 23);
-            this.label6.TabIndex = 4;
-            this.label6.Text = "(Берется с рабочего стола)";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // panel4
             // 
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -559,29 +546,6 @@
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(272, 104);
             this.panel4.TabIndex = 17;
-            // 
-            // button1
-            // 
-            this.button1.BackColor = System.Drawing.Color.LightGray;
-            this.button1.ForeColor = System.Drawing.Color.DarkRed;
-            this.button1.Location = new System.Drawing.Point(240, 64);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(25, 23);
-            this.button1.TabIndex = 12;
-            this.button1.Text = "✖";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // parseStatusLabel
-            // 
-            this.parseStatusLabel.BackColor = System.Drawing.Color.PapayaWhip;
-            this.parseStatusLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.parseStatusLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.parseStatusLabel.Location = new System.Drawing.Point(28, 38);
-            this.parseStatusLabel.Name = "parseStatusLabel";
-            this.parseStatusLabel.Size = new System.Drawing.Size(206, 23);
-            this.parseStatusLabel.TabIndex = 4;
-            this.parseStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // panel5
             // 
@@ -604,6 +568,41 @@
             this.label5.TabIndex = 4;
             this.label5.Text = "(Сохранится на рабочем столе)";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label6
+            // 
+            this.label6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label6.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.label6.Location = new System.Drawing.Point(11, 57);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(123, 23);
+            this.label6.TabIndex = 4;
+            this.label6.Text = "(Берется с рабочего стола)";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // parseStatusLabel
+            // 
+            this.parseStatusLabel.BackColor = System.Drawing.Color.PapayaWhip;
+            this.parseStatusLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.parseStatusLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.parseStatusLabel.Location = new System.Drawing.Point(28, 38);
+            this.parseStatusLabel.Name = "parseStatusLabel";
+            this.parseStatusLabel.Size = new System.Drawing.Size(206, 23);
+            this.parseStatusLabel.TabIndex = 4;
+            this.parseStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.LightGray;
+            this.button1.ForeColor = System.Drawing.Color.DarkRed;
+            this.button1.Location = new System.Drawing.Point(240, 64);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(25, 23);
+            this.button1.TabIndex = 12;
+            this.button1.Text = "✖";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Parser
             // 

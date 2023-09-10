@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -17,6 +18,9 @@ namespace PickerParser
         static string baseUrl = "https://ru.pickgamer.com/games";
         static List<Game> games = new List<Game>();
         static int pageCount;
+
+        CancellationTokenSource cts = new CancellationTokenSource();
+
 
         public Parser()
         {
@@ -121,73 +125,92 @@ namespace PickerParser
         }   // Перенести из JSON файла все игры в games (List<Game>)
         async void getGamesInfoBtn_Click(object sender, EventArgs e)
         {
+            // Отменяем предыдущую задачу, если она выполняется
+            cts.Cancel();
 
-            gameInfoParseStatusBar.Value = 1;
-            gameInfoParseStatusBar.Maximum = games.Count;
+            // Создаем новый CancellationTokenSource
+            cts = new CancellationTokenSource();
+            CancellationToken ct = cts.Token;
 
-            foreach (var game in games)
+            await Task.Factory.StartNew(async () =>
             {
-                foreach (ListViewItem item in gamesList.Items) // Выделяет в списке игру, которая сейчас обрабатывается (для визуализации)
-                {
-                    item.Selected = false;
-                    if (item.Text == game.GameUrl)
-                    {
-                        item.Selected = true;
-                        gamesList.Select();
-                        break; // Чтобы не продолжать поиск после нахождения совпадения
-                    }
-                };
+                ParseGame();
+            },ct);
 
-                string gamePage = await GetPageContent($"{baseUrl}/{game.GameUrl}/requirements");
-                string regexRequirements = @"<li>(.*?)\s*:\s*(.*?)<\/li>";
-                string regexGameName = "<h2>Вот такие системные требования <em>(.*?)</em>";
-                MatchCollection maches = Regex.Matches(gamePage, regexRequirements);
-                Match matchGameName = Regex.Match(gamePage, regexGameName);
-                game.GameName = matchGameName.Groups[1].Value;
-                bool min = true;
-                foreach (Match match in maches)
-                {
-                    string reqName = match.Groups[1].Value;
-                    string reqValue = match.Groups[2].Value;
+            void ParseGame()
+            {
 
-                    if (min)  // Проверяем - парсим еще минимальные требования или уже оптимальные? (они идут попорядку)
+                gameInfoParseStatusBar.Value = 1;
+                gameInfoParseStatusBar.Maximum = games.Count;
+                foreach (var game in games)
+                {
+                    if (ct.IsCancellationRequested)
+                        return;
+                    foreach (ListViewItem item in gamesList.Items) // Выделяет в списке игру, которая сейчас обрабатывается (для визуализации)
                     {
-                        switch (reqName)
+                        item.Selected = false;
+                        if (item.Text == game.GameUrl)
                         {
-                            case "ПРОЦЕССОР": game.minRequirements.CPU = reqValue; break;
-                            case "ОПЕРАТИВНАЯ ПАМЯТЬ": game.minRequirements.RAM = reqValue; break;
-                            case "ОС": game.minRequirements.OS = reqValue; break;
-                            case "ВИДЕОКАРТА": game.minRequirements.Videocard = reqValue; break;
-                            case "PIXEL ШЕЙДЕРЫ": game.minRequirements.Pixel = reqValue; break;
-                            case "VERTEX ШЕЙДЕРЫ": game.minRequirements.Vertex = reqValue; break;
-                            case "СВОБОДНОЕ МЕСТО НА ДИСКЕ": game.minRequirements.DiskSpace = reqValue; break;
-                            case "ВЫДЕЛЕННАЯ ВИДЕО ПАМЯТЬ": game.minRequirements.VideoRam = reqValue; min = false; break; // Ставим метку, что все минимальные требования спарсили
-                            default: break;
+                            item.Selected = true;
+                            gamesList.Select();
+                            break; // Чтобы не продолжать поиск после нахождения совпадения
                         }
+                    };
+
+                    if (gameInfoParseStatusBar.Value < gameInfoParseStatusBar.Maximum)
+                    {
+                        gameInfoParseStatusBar.Value++;
+                        parseStatusLabel.Text = gameInfoParseStatusBar.Value.ToString() + "/" + gameInfoParseStatusBar.Maximum.ToString() + " " + game.GameUrl;
                     }
                     else
                     {
-                        switch (reqName)
+                        saveJsonBtn.Enabled = true;
+                        getGamesInfoBtn.Enabled = false;
+                    }
+
+                    string gamePage = GetPageContent($"{baseUrl}/{game.GameUrl}/requirements").ToString();
+                    string regexRequirements = @"<li>(.*?)\s*:\s*(.*?)<\/li>";
+                    string regexGameName = "<h2>Вот такие системные требования <em>(.*?)</em>";
+                    MatchCollection maches = Regex.Matches(gamePage, regexRequirements);
+                    Match matchGameName = Regex.Match(gamePage, regexGameName);
+                    game.GameName = matchGameName.Groups[1].Value;
+                    bool min = true;
+                    foreach (Match match in maches)
+                    {
+                        string reqName = match.Groups[1].Value;
+                        string reqValue = match.Groups[2].Value;
+
+                        if (min)  // Проверяем - парсим еще минимальные требования или уже оптимальные? (они идут попорядку)
                         {
-                            case "ПРОЦЕССОР": game.optRequirements.CPU = reqValue; break;
-                            case "ОПЕРАТИВНАЯ ПАМЯТЬ": game.optRequirements.RAM = reqValue; break;
-                            case "ОС": game.optRequirements.OS = reqValue; break;
-                            case "ВИДЕОКАРТА": game.optRequirements.Videocard = reqValue; break;
-                            case "PIXEL ШЕЙДЕРЫ": game.optRequirements.Pixel = reqValue; break;
-                            case "VERTEX ШЕЙДЕРЫ": game.optRequirements.Vertex = reqValue; break;
-                            case "СВОБОДНОЕ МЕСТО НА ДИСКЕ": game.optRequirements.DiskSpace = reqValue; break;
-                            case "ВЫДЕЛЕННАЯ ВИДЕО ПАМЯТЬ": game.optRequirements.VideoRam = reqValue; break;
-                            default: break;
+                            switch (reqName)
+                            {
+                                case "ПРОЦЕССОР": game.minRequirements.CPU = reqValue; break;
+                                case "ОПЕРАТИВНАЯ ПАМЯТЬ": game.minRequirements.RAM = reqValue; break;
+                                case "ОС": game.minRequirements.OS = reqValue; break;
+                                case "ВИДЕОКАРТА": game.minRequirements.Videocard = reqValue; break;
+                                case "PIXEL ШЕЙДЕРЫ": game.minRequirements.Pixel = reqValue; break;
+                                case "VERTEX ШЕЙДЕРЫ": game.minRequirements.Vertex = reqValue; break;
+                                case "СВОБОДНОЕ МЕСТО НА ДИСКЕ": game.minRequirements.DiskSpace = reqValue; break;
+                                case "ВЫДЕЛЕННАЯ ВИДЕО ПАМЯТЬ": game.minRequirements.VideoRam = reqValue; min = false; break; // Ставим метку, что все минимальные требования спарсили
+                                default: break;
+                            }
+                        }
+                        else
+                        {
+                            switch (reqName)
+                            {
+                                case "ПРОЦЕССОР": game.optRequirements.CPU = reqValue; break;
+                                case "ОПЕРАТИВНАЯ ПАМЯТЬ": game.optRequirements.RAM = reqValue; break;
+                                case "ОС": game.optRequirements.OS = reqValue; break;
+                                case "ВИДЕОКАРТА": game.optRequirements.Videocard = reqValue; break;
+                                case "PIXEL ШЕЙДЕРЫ": game.optRequirements.Pixel = reqValue; break;
+                                case "VERTEX ШЕЙДЕРЫ": game.optRequirements.Vertex = reqValue; break;
+                                case "СВОБОДНОЕ МЕСТО НА ДИСКЕ": game.optRequirements.DiskSpace = reqValue; break;
+                                case "ВЫДЕЛЕННАЯ ВИДЕО ПАМЯТЬ": game.optRequirements.VideoRam = reqValue; break;
+                                default: break;
+                            }
                         }
                     }
-                }
-
-                if (gameInfoParseStatusBar.Value < gameInfoParseStatusBar.Maximum)
-                    gameInfoParseStatusBar.Value++;
-                else
-                {
-                    saveJsonBtn.Enabled = true;
-                    getGamesInfoBtn.Enabled = false;
                 }
             }
         }  // Парсит данные по каждой игре
@@ -205,6 +228,7 @@ namespace PickerParser
                     foreach (Game game in games)
                         gamesList.Items.Add(game.GameUrl);
                     getGamesInfoBtn.Enabled = true;
+                    linksCountLabel.Text = "Получено ссылок: " + games.Count().ToString();
                 }
             }
         }  // Получить Слаги игр
@@ -227,7 +251,7 @@ namespace PickerParser
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            cts.Cancel();
         }
     }
 }
