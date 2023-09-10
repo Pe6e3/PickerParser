@@ -1,10 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using System.Windows.Forms;
 
 namespace PickerParser.Components
@@ -13,7 +7,9 @@ namespace PickerParser.Components
     {
         private Color barColor = Color.Blue;
         private Color backgroundColor = Color.White;
-
+        private Color textColor = Color.Black;
+        private string customText = "";
+        private Font textFont = new Font("W3$iP", 9);
         public ColoredProgressBar()
         {
             this.SetStyle(ControlStyles.UserPaint, true);
@@ -40,6 +36,36 @@ namespace PickerParser.Components
             }
         }
 
+        public Color TextColor
+        {
+            get { return textColor; }
+            set
+            {
+                textColor = value;
+                this.Invalidate();
+            }
+        }
+
+        public string Text
+        {
+            get { return customText; }
+            set
+            {
+                customText = value;
+                this.Invalidate();
+            }
+        }
+
+        public Font TextFont
+        {
+            get { return textFont; }
+            set
+            {
+                textFont = value;
+                this.Invalidate();
+            }
+        }
+
         protected override void OnPaint(PaintEventArgs e)
         {
             Rectangle rect = new Rectangle(0, 0, this.Width, this.Height);
@@ -51,6 +77,12 @@ namespace PickerParser.Components
             rect.Width = (int)(rect.Width * ((double)Value / Maximum)) - 4;
             rect.Height = rect.Height - 4;
             e.Graphics.FillRectangle(new SolidBrush(BarColor), 2, 2, rect.Width, rect.Height);
+
+            // Отрисовка текста
+            string text = string.IsNullOrEmpty(customText) ? Value.ToString() + "%" : customText;
+            SizeF textSize = e.Graphics.MeasureString(text, TextFont);
+            PointF textLocation = new PointF(2, (this.Height - textSize.Height) / 2);
+            e.Graphics.DrawString(text, TextFont, new SolidBrush(TextColor), textLocation);
         }
     }
 }

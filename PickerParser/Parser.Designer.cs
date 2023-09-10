@@ -71,9 +71,8 @@
             this.label6 = new System.Windows.Forms.Label();
             this.gamesCountLabel = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.gameInfoParseStatusBar = new PickerParser.Components.ColoredProgressBar();
-            this.parseStatusLabel = new System.Windows.Forms.Label();
             this.exitBtn = new System.Windows.Forms.Button();
+            this.gameInfoParseStatusBar = new PickerParser.Components.ColoredProgressBar();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -103,7 +102,7 @@
             this.UrlLabel.ForeColor = System.Drawing.Color.GreenYellow;
             this.UrlLabel.Location = new System.Drawing.Point(91, 56);
             this.UrlLabel.Name = "UrlLabel";
-            this.UrlLabel.Size = new System.Drawing.Size(207, 23);
+            this.UrlLabel.Size = new System.Drawing.Size(224, 23);
             this.UrlLabel.TabIndex = 4;
             // 
             // minCpuLabel
@@ -198,7 +197,7 @@
             this.gamesCB.IntegralHeight = false;
             this.gamesCB.Location = new System.Drawing.Point(91, 15);
             this.gamesCB.Name = "gamesCB";
-            this.gamesCB.Size = new System.Drawing.Size(254, 21);
+            this.gamesCB.Size = new System.Drawing.Size(224, 21);
             this.gamesCB.TabIndex = 7;
             this.gamesCB.SelectedIndexChanged += new System.EventHandler(this.gamesCB_SelectedIndexChanged);
             // 
@@ -322,13 +321,14 @@
             // readJsonBtn
             // 
             this.readJsonBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.readJsonBtn.Enabled = false;
             this.readJsonBtn.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
             this.readJsonBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.readJsonBtn.Font = new System.Drawing.Font("W3$iP", 8.25F);
+            this.readJsonBtn.Font = new System.Drawing.Font("W3$iP", 6.25F);
             this.readJsonBtn.ForeColor = System.Drawing.Color.Gray;
-            this.readJsonBtn.Location = new System.Drawing.Point(364, 15);
+            this.readJsonBtn.Location = new System.Drawing.Point(392, 10);
             this.readJsonBtn.Name = "readJsonBtn";
-            this.readJsonBtn.Size = new System.Drawing.Size(121, 45);
+            this.readJsonBtn.Size = new System.Drawing.Size(93, 45);
             this.readJsonBtn.TabIndex = 10;
             this.readJsonBtn.Text = "Прочитать AllGames.Json";
             this.readJsonBtn.UseVisualStyleBackColor = false;
@@ -433,7 +433,7 @@
             this.label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.label1.Font = new System.Drawing.Font("W3$iP", 8.25F);
             this.label1.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.label1.Location = new System.Drawing.Point(137, 94);
+            this.label1.Location = new System.Drawing.Point(129, 94);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(161, 13);
             this.label1.TabIndex = 4;
@@ -447,7 +447,7 @@
             this.label2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.label2.Font = new System.Drawing.Font("W3$iP", 8.25F);
             this.label2.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.label2.Location = new System.Drawing.Point(310, 94);
+            this.label2.Location = new System.Drawing.Point(312, 94);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(175, 13);
             this.label2.TabIndex = 4;
@@ -486,7 +486,8 @@
             // 
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label4.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.label4.Font = new System.Drawing.Font("W3$iP", 8.25F);
+            this.label4.ForeColor = System.Drawing.Color.DarkGray;
             this.label4.Location = new System.Drawing.Point(131, 59);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(27, 20);
@@ -523,7 +524,8 @@
             // 
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label3.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.label3.Font = new System.Drawing.Font("W3$iP", 8.25F);
+            this.label3.ForeColor = System.Drawing.Color.DarkGray;
             this.label3.Location = new System.Drawing.Point(47, 60);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(27, 20);
@@ -596,12 +598,13 @@
             // 
             // gamesCountLabel
             // 
+            this.gamesCountLabel.BackColor = System.Drawing.Color.Transparent;
             this.gamesCountLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.gamesCountLabel.Font = new System.Drawing.Font("W3$iP", 8.25F);
-            this.gamesCountLabel.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.gamesCountLabel.Location = new System.Drawing.Point(406, 19);
+            this.gamesCountLabel.Font = new System.Drawing.Font("W3$iP", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.gamesCountLabel.ForeColor = System.Drawing.Color.DarkGray;
+            this.gamesCountLabel.Location = new System.Drawing.Point(321, 15);
             this.gamesCountLabel.Name = "gamesCountLabel";
-            this.gamesCountLabel.Size = new System.Drawing.Size(56, 23);
+            this.gamesCountLabel.Size = new System.Drawing.Size(65, 23);
             this.gamesCountLabel.TabIndex = 4;
             this.gamesCountLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -609,34 +612,10 @@
             // 
             this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.panel4.Controls.Add(this.gameInfoParseStatusBar);
-            this.panel4.Controls.Add(this.parseStatusLabel);
             this.panel4.Location = new System.Drawing.Point(20, 150);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(510, 104);
             this.panel4.TabIndex = 17;
-            // 
-            // gameInfoParseStatusBar
-            // 
-            this.gameInfoParseStatusBar.BackColor = System.Drawing.Color.ForestGreen;
-            this.gameInfoParseStatusBar.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.gameInfoParseStatusBar.BarColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(20)))), ((int)(((byte)(100)))), ((int)(((byte)(20)))));
-            this.gameInfoParseStatusBar.Location = new System.Drawing.Point(28, 58);
-            this.gameInfoParseStatusBar.Name = "gameInfoParseStatusBar";
-            this.gameInfoParseStatusBar.Size = new System.Drawing.Size(457, 23);
-            this.gameInfoParseStatusBar.Step = 1;
-            this.gameInfoParseStatusBar.TabIndex = 12;
-            // 
-            // parseStatusLabel
-            // 
-            this.parseStatusLabel.BackColor = System.Drawing.Color.DarkGray;
-            this.parseStatusLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.parseStatusLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.parseStatusLabel.Font = new System.Drawing.Font("W3$iP", 8.25F);
-            this.parseStatusLabel.Location = new System.Drawing.Point(28, 11);
-            this.parseStatusLabel.Name = "parseStatusLabel";
-            this.parseStatusLabel.Size = new System.Drawing.Size(457, 32);
-            this.parseStatusLabel.TabIndex = 4;
-            this.parseStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // exitBtn
             // 
@@ -655,6 +634,19 @@
             this.exitBtn.Text = "✖";
             this.exitBtn.UseVisualStyleBackColor = false;
             this.exitBtn.Click += new System.EventHandler(this.exitBtn_Click);
+            // 
+            // gameInfoParseStatusBar
+            // 
+            this.gameInfoParseStatusBar.BackColor = System.Drawing.Color.ForestGreen;
+            this.gameInfoParseStatusBar.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.gameInfoParseStatusBar.BarColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(20)))), ((int)(((byte)(100)))), ((int)(((byte)(20)))));
+            this.gameInfoParseStatusBar.ForeColor = System.Drawing.SystemColors.Control;
+            this.gameInfoParseStatusBar.Location = new System.Drawing.Point(28, 29);
+            this.gameInfoParseStatusBar.Name = "gameInfoParseStatusBar";
+            this.gameInfoParseStatusBar.Size = new System.Drawing.Size(457, 41);
+            this.gameInfoParseStatusBar.Step = 1;
+            this.gameInfoParseStatusBar.TabIndex = 12;
+            this.gameInfoParseStatusBar.TextColor = System.Drawing.Color.Silver;
             // 
             // Parser
             // 
@@ -729,7 +721,6 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label parseStatusLabel;
         private System.Windows.Forms.Label gamesCountLabel;
         private Components.ColoredProgressBar gameInfoParseStatusBar;
         private System.Windows.Forms.Button exitBtn;

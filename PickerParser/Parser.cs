@@ -52,7 +52,10 @@ namespace PickerParser
         private void Parser_Load(object sender, EventArgs e)
         {
             readJsonBtn.Click += (s, ev) => LoadJson();
-            gameInfoParseStatusBar.BackColor = Color.Red;
+            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string filePath = Path.Combine(desktopPath, "AllGames.json");
+            if (File.Exists(filePath))
+                readJsonBtn.Enabled = true;
         }
 
         void RefreshGamesCB()
@@ -114,7 +117,7 @@ namespace PickerParser
                 {
                     string json = File.ReadAllText(filePath);
                     games = JsonConvert.DeserializeObject<List<Game>>(json);
-                    gamesCountLabel.Text = games.Count.ToString() + " шт.";
+                    gamesCountLabel.Text = $"({games.Count.ToString()}) шт.";
                 }
                 else
                     MessageBox.Show("Файл AllGames.json не существует.");
@@ -182,7 +185,10 @@ namespace PickerParser
                 if (gameInfoParseStatusBar.Value < gameInfoParseStatusBar.Maximum)
                 {
                     gameInfoParseStatusBar.Value++;
-                    parseStatusLabel.Text = gameInfoParseStatusBar.Value.ToString() + "/" + gameInfoParseStatusBar.Maximum.ToString() + "   " + game.GameUrl;
+                    int value = gameInfoParseStatusBar.Value;
+                    int max = gameInfoParseStatusBar.Maximum;
+                    gameInfoParseStatusBar.Text = $"{(value * 100) / max}% ({value.ToString()}/{max.ToString()})  -  {game.GameUrl}";
+
                 }
                 else
                 {
