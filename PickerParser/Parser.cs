@@ -2,6 +2,7 @@
 using PickerParser.Entities;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -17,6 +18,9 @@ namespace PickerParser
         static string baseUrl = "https://ru.pickgamer.com/games";
         static List<Game> games = new List<Game>();
         static int pageCount;
+        private bool isDragging = false;
+        private Point clickOffset;
+
 
         public Parser()
         {
@@ -48,6 +52,7 @@ namespace PickerParser
         private void Parser_Load(object sender, EventArgs e)
         {
             readJsonBtn.Click += (s, ev) => LoadJson();
+            gameInfoParseStatusBar.BackColor = Color.Red;
         }
 
         void RefreshGamesCB()
@@ -90,7 +95,7 @@ namespace PickerParser
                 string json = JsonConvert.SerializeObject(games);
                 File.WriteAllText(filePath, json);
 
-                MessageBox.Show($"JSON-файл с информацией об играх ({games.Count()} шт) сохранен на рабочем столе.\nПуть:  {filePath}");
+                MessageBox.Show($"JSON-файл с инфой об играх ({games.Count()} шт) сохранен на рабочем столе.\nПуть:  {filePath}");
             }
             catch (Exception ex)
             {
@@ -121,7 +126,7 @@ namespace PickerParser
 
             RefreshGamesCB();
         }   // Перенести из JSON файла все игры в games (List<Game>)
-        async void getGamesInfoBtn_Click(object sender, EventArgs e)
+        async void GetGames()
         {
 
             gameInfoParseStatusBar.Value = 1;
@@ -129,16 +134,6 @@ namespace PickerParser
 
             foreach (var game in games)
             {
-                foreach (ListViewItem item in gamesList.Items) // Выделяет в списке игру, которая сейчас обрабатывается (для визуализации)
-                {
-                    item.Selected = false;
-                    if (item.Text == game.GameUrl)
-                    {
-                        item.Selected = true;
-                        gamesList.Select();
-                        break; // Чтобы не продолжать поиск после нахождения совпадения
-                    }
-                };
 
                 string gamePage = await GetPageContent($"{baseUrl}/{game.GameUrl}/requirements");
                 string regexRequirements = @"<li>(.*?)\s*:\s*(.*?)<\/li>";
@@ -193,7 +188,6 @@ namespace PickerParser
                 {
                     SaveJson();
                     LoadJson();
-                    getGamesInfoBtn.Enabled = false;
                 }
             }
         }  // Парсит данные по каждой игре
@@ -204,13 +198,10 @@ namespace PickerParser
                 if (pageFrom <= pageTo && pageTo <= pageCount)
                 {
                     games.Clear();
-                    gamesList.Items.Clear();
                     for (int i = pageFrom; i <= pageTo; i++)
                         await ParseGameSlugs(i);
 
-                    foreach (Game game in games)
-                        gamesList.Items.Add(game.GameUrl);
-                    getGamesInfoBtn.Enabled = true;
+                    GetGames();
                 }
             }
         }  // Получить Слаги игр
@@ -236,6 +227,35 @@ namespace PickerParser
 
         }
 
+        private void exitBtn_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
 
+        private void Parser_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                isDragging = true;
+                clickOffset = e.Location;
+            }
+        }
+
+        private void Parser_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+                isDragging = false;
+        }
+
+        private void Parser_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDragging)
+            {
+                Point newLocation = this.Location;
+                newLocation.X += e.X - clickOffset.X;
+                newLocation.Y += e.Y - clickOffset.Y;
+                this.Location = newLocation;
+            }
+        }
     }
 }

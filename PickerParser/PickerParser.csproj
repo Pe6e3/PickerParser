@@ -49,6 +49,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\ColoredProgressBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Entities\Game.cs" />
     <Compile Include="Entities\Requirements.cs" />
     <Compile Include="Parser.cs">
