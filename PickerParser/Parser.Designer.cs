@@ -72,8 +72,8 @@
             this.gamesCountLabel = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.gameInfoParseStatusBar = new PickerParser.Components.ColoredProgressBar();
-            this.exitBtn = new System.Windows.Forms.Button();
             this.textStatusLabel = new System.Windows.Forms.Label();
+            this.exitBtn = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -500,6 +500,7 @@
             // 
             this.pageToField.BackColor = System.Drawing.Color.PaleGreen;
             this.pageToField.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.pageToField.Enabled = false;
             this.pageToField.Font = new System.Drawing.Font("W3$iP", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.pageToField.Location = new System.Drawing.Point(164, 59);
             this.pageToField.Multiline = true;
@@ -633,6 +634,18 @@
             this.gameInfoParseStatusBar.TextColor = System.Drawing.Color.Silver;
             this.gameInfoParseStatusBar.TextFont = new System.Drawing.Font("W3$iP", 9F);
             // 
+            // textStatusLabel
+            // 
+            this.textStatusLabel.BackColor = System.Drawing.Color.Transparent;
+            this.textStatusLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.textStatusLabel.Font = new System.Drawing.Font("W3$iP", 8.25F);
+            this.textStatusLabel.ForeColor = System.Drawing.Color.DarkGray;
+            this.textStatusLabel.Location = new System.Drawing.Point(32, 19);
+            this.textStatusLabel.Name = "textStatusLabel";
+            this.textStatusLabel.Size = new System.Drawing.Size(453, 20);
+            this.textStatusLabel.TabIndex = 4;
+            this.textStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // exitBtn
             // 
             this.exitBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -650,18 +663,6 @@
             this.exitBtn.Text = "✖";
             this.exitBtn.UseVisualStyleBackColor = false;
             this.exitBtn.Click += new System.EventHandler(this.exitBtn_Click);
-            // 
-            // textStatusLabel
-            // 
-            this.textStatusLabel.BackColor = System.Drawing.Color.Transparent;
-            this.textStatusLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.textStatusLabel.Font = new System.Drawing.Font("W3$iP", 8.25F);
-            this.textStatusLabel.ForeColor = System.Drawing.Color.DarkGray;
-            this.textStatusLabel.Location = new System.Drawing.Point(32, 19);
-            this.textStatusLabel.Name = "textStatusLabel";
-            this.textStatusLabel.Size = new System.Drawing.Size(453, 20);
-            this.textStatusLabel.TabIndex = 4;
-            this.textStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Parser
             // 

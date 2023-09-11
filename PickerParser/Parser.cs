@@ -44,10 +44,7 @@ namespace PickerParser
             {
                 string gameUrl = match.Groups[1].ToString();
                 if (!games.Any(x => x.GameUrl == gameUrl))
-                {
                     games.Add(new Game(gameUrl));
-                    tasksCheckList.Items.Add(gameUrl);
-                }
 
 
                 if (gameInfoParseStatusBar.Value < gameInfoParseStatusBar.Maximum)
@@ -57,6 +54,8 @@ namespace PickerParser
                     int max = gameInfoParseStatusBar.Maximum;
                     gameInfoParseStatusBar.Text = $"{(value * 100) / max}% ({value.ToString()}/{max.ToString()}) -  {gameUrl}";
                 }
+                else
+                    textStatusLabel.Text = "Слаги собраны, ждите...";
             }
         }
 
@@ -150,8 +149,6 @@ namespace PickerParser
                     gameInfoParseStatusBar.Value = 1;
                     gameInfoParseStatusBar.Maximum = (pageTo - pageFrom + 1) * 20;
                     textStatusLabel.Text = "Получение Слагов игр";
-                    tasksCheckList.Items.Clear();
-
                     try
                     {
                         for (int i = pageFrom; i <= pageTo; i++)
@@ -161,7 +158,6 @@ namespace PickerParser
                     {
                         MessageBox.Show("Ошибка при парсинге слагов игр: " + ex.Message);
                     }
-
                     await GetGames();
                 }
             }
@@ -170,6 +166,7 @@ namespace PickerParser
         async void getPageCount_Click(object sender, EventArgs e)
         {
             await GetPageCountAsync();
+            pageToField.Enabled = true;
         }
 
         async Task GetPageCountAsync()
@@ -215,7 +212,6 @@ namespace PickerParser
 
         async Task GetGames()
         {
-
             textStatusLabel.Text = "Получение данных об играх";
             gameInfoParseStatusBar.Value = 1;
             gameInfoParseStatusBar.Maximum = games.Count;
@@ -225,12 +221,10 @@ namespace PickerParser
 
             try
             {
-                foreach (var game in games)            // парсинг каждой игры и добавление задачи в список
-                {
+                foreach (var game in games)                // парсинг каждой игры и добавление задачи в список
                     parsingTasks.Add(ParseGame(game));
-                }
 
-                await Task.WhenAll(parsingTasks);   // ждем завершения всех задач парсинга
+                await Task.WhenAll(parsingTasks);          // ждем завершения всех задач парсинга
             }
             catch (Exception ex)
             {
@@ -301,13 +295,7 @@ namespace PickerParser
                         int max = gameInfoParseStatusBar.Maximum;
                         gameInfoParseStatusBar.Text = $"{(value * 100) / max}% ({value}/{max})  -  {game.GameName}";
                     }
-
-                    int itemIndex = tasksCheckList.FindString(game.GameUrl);
-                    if (itemIndex != ListBox.NoMatches)
-                        tasksCheckList.SetItemChecked(itemIndex, true);
-
                 }));
-
             }
             catch (Exception ex)
             {
